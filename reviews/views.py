@@ -6,9 +6,17 @@ from .forms import CustomUserCreationForm, CustomUserAuthenticationForm
 from .models import Ticket, Review
 
 def home(request):
+    login_form = CustomUserAuthenticationForm()
+    register_form = CustomUserCreationForm()
     tickets = Ticket.objects.all()
     reviews = Review.objects.all()
-    return render(request, 'reviews/home.html', {'tickets': tickets, 'reviews': reviews})
+    context = {
+        'login_form': login_form,
+        'register_form': register_form,
+        'tickets': tickets,
+        'reviews': reviews
+    }
+    return render(request, 'reviews/home.html', context)
 
 class RegisterView(View):
     def get(self, request):
