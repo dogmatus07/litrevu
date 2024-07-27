@@ -1,0 +1,20 @@
+{% load static %}
+<html>
+    <head>
+        <title>LITRevu App</title>
+        <link rel="stylesheet" href="{% static 'reviews/css/style.css' %}" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+        <link rel="icon" href="{% static 'reviews/images/favicon.ico'%}" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap">
+    </head>
+    <body>
+        <header class="header">
+            <img src="{% static 'reviews/images/logo.png'%}" alt="Logo officiel LITReview" class="logo">
+        </header>
+        {% block content %} {% endblock %}
+        <footer class="footer">
+            <p>&copy; {% now "Y" %} - LITReview - Tous droits réservés</p>
+        </footer>
+    </body>
+</html>

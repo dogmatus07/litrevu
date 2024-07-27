@@ -1,0 +1,14 @@
+<!-- reviews/templates/reviews/login_form.html -->
+
+<form method="post" class="login_form">
+    {% csrf_token %}
+    <div class="form_group">
+        <label for="id_username">Nom d'utilisateur</label>
+        <input type="text" name="username" autofocus required id="id_username" class="form_control" placeholder="Nom d'utilisateur">
+    </div>
+    <div class="form_group">
+        <label for="id_password">Mot de passe</label>
+        <input type="password" name="password" required id="id_password" class="form_control" placeholder="Mot de passe">
+    </div>
+    <button type="submit" class="login_button">Se connecter</button>
+</form>
