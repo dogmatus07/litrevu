@@ -91,6 +91,17 @@ body {
     padding: calc(var(--base-font-size) * 1.618);
 }
 
+/* register.html, login.html */
+.join .login {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: left;
+    justify-content: center;
+    padding: calc(var(--base-font-size) * 1.618);
+}
+
 .login_form label, .register_form label {
     visibility: hidden;
 }
@@ -102,6 +113,28 @@ body {
     border-radius: calc(var(--base-font-size) * 0.618);
     margin-bottom: 0 5px;
     border-sizing: border-box;
+}
+
+.login_section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: left;
+    justify-content: center;
+    padding: calc(var(--base-font-size) * 1.618);
+}
+
+.login_section input {
+    width: 100%;
+    border: 1px solid var(--litreview-dark-gray);
+    border-radius: calc(var(--base-font-size) * 0.618);
+    margin-bottom: 0 5px;
+    border-sizing: border-box;
+}
+
+.login_section label {
+    visibility: hidden;
 }
 
 .cta_register, .cta_login {
