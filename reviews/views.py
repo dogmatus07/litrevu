@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 from django.views import View
-from .forms import CustomUserCreationForm, CustomUserAuthenticationForm
+from .forms import CustomUserCreationForm, CustomUserAuthenticationForm, TicketForm
 from .models import Ticket, Review
 
 def home(request):
@@ -43,3 +44,16 @@ class LoginView(View):
             login(request, user)
             return redirect('home')
         return render(request, 'reviews/login.html', {'form' : form})
+
+@login_required
+def add_ticket(request):
+    if request.method == 'POST':
+        form = TicketForm(request.POST, request.FILES)
+        if form.is_valid():
+            ticket = form.save(commit=False)
+            ticket.user = request.user
+            ticket.save()
+            return redirect('home')
+    else:
+        form = TicketForm
+    return render(request, 'reviews/add_ticket.html', {'form': form})

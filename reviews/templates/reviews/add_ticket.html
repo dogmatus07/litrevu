@@ -1,0 +1,12 @@
+<!-- reviews/templates/reviews/add_ticket.html -->
+{% extends 'reviews/base.html' %}
+{% block content %}
+<div class="ticket container">
+    <div class="row">
+        <h2>Ajouter un billet</h2>
+        {% csrf_token %}
+        {% form.as_p %}
+        <button type="submit">Enregistrer</button>
+    </div>
+</div>
+{% endblock %}
