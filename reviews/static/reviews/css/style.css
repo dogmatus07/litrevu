@@ -14,6 +14,7 @@
     --cta-title-font-size: calc(var(--cta-subtitle-font-size) * 1.618);
     --copy-font-family: 'Open Sans', sans-serif;
     --title-font-family: 'Merriweather', serif;
+    --copy-small: calc(var(--base-font-size) * 0.818);
 }
 
 body {
@@ -36,6 +37,7 @@ body {
     transition: transform 0.3s ease box-shadow 0.3s ease;
     transform: translate(0,0)
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-top: 1.5rem;
 }
 
 .signup_button:hover, .login_button:hover, .home_register_button:hover {
@@ -56,7 +58,7 @@ body {
     margin: calc(var(--base-font-size) * 0.618);
 }
 
-.container {
+.container, .register_container {
     display: flex;
     justify-content: center;
     flex-direction: row;
@@ -66,7 +68,7 @@ body {
     margin: 0 auto;
     gap: calc(var(--base-font-size) * 1.618);
 }
-.register_column, .login_column {
+.register_column, .login_column, .register_section {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -79,14 +81,27 @@ body {
     margin: 0 calc(var(--base-font-size) * 0.618);
 }
 
-.login_form {
+.login_form, .register_form {
     flex: 1;
     display: flex;
     flex-direction: column;
     text-align: center;
-    align-items: center;
+    align-items: left;
     justify-content: center;
     padding: calc(var(--base-font-size) * 1.618);
+}
+
+.login_form label, .register_form label {
+    visibility: hidden;
+}
+
+.login_form input, .register_form input {
+    width: 100%;
+    padding: calc(var(--base-font-size) * 0.618);
+    border: 1px solid var(--litreview-dark-gray);
+    border-radius: calc(var(--base-font-size) * 0.618);
+    margin-bottom: 0 5px;
+    border-sizing: border-box;
 }
 
 .cta_register, .cta_login {
