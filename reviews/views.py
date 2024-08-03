@@ -22,7 +22,7 @@ def home(request):
 class RegisterView(View):
     def get(self, request):
         form = CustomUserCreationForm()
-        return render(request, 'reviews/register.html', {'form' : form})
+        return render(request, 'reviews/register.html', {'form':form})
 
     def post(self, request):
         form = CustomUserCreationForm(request.POST)
@@ -30,20 +30,33 @@ class RegisterView(View):
             user = form.save()
             login(request, user)
             return redirect('home')
-        return render(request, 'reviews/register.html', {'form': form})
+        return render(request, 'reviews/register.html', {'form':form})
 
 class LoginView(View):
     def get(self, request):
         form = AuthenticationForm()
-        return render(request, 'reviews/login.html', {'form' : form})
+        return render(request, 'reviews/login.html', {'form':form})
 
     def post(self, request):
-        form = AuthenticationForm(request, data= request.POST)
+        form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+            messages.success(request, 'Vous êtes connecté')
             return redirect('home')
+        else:
+            messages.error(request, 'Echec de la connexion')
         return render(request, 'reviews/login.html', {'form' : form})
+
+@login_required
+def dashboard(request):
+    pass
+
+
+@login_required
+def list_tickets(request):
+    tickets = Ticket.objects.filter(user=request.user)
+    return render(request, 'reviews/list_tickets', {'tickets': tickets})
 
 @login_required
 def add_ticket(request):
@@ -51,9 +64,27 @@ def add_ticket(request):
         form = TicketForm(request.POST, request.FILES)
         if form.is_valid():
             ticket = form.save(commit=False)
-            ticket.user = request.user
+            ticket.user = request.user # assign the ticket to the current user
             ticket.save()
-            return redirect('home')
+            return redirect('home') # redirect to homepage
+        else:
+            print(form.errors)
     else:
         form = TicketForm
     return render(request, 'reviews/add_ticket.html', {'form': form})
+
+
+@login_required
+def edit_ticket(request, ticket_id):
+    ticket = get_objetc_or_404(Ticket, id=ticket_id, user=request.user)
+    if request.method == 'POST':
+        form = TicketForm(request.POST, request.FILES, instance=ticket)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Le billet a été modifié avec succès')
+            return redirect('home')
+        else:
+            messages.error(request, 'Des erreurs sont présentes dans le formulaire')
+    else:
+        form = TicketForm(instance=ticket)
+    return render(request, 'reviews/edit_ticket.html', {'form': form, 'ticket': ticket})

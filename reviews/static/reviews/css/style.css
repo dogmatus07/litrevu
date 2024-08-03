@@ -23,7 +23,7 @@ body {
     box-sizing: border-box;
 }
 
-.signup_button, .login_button, .home_register_button {
+.signup_button, .login_button, .home_register_button, .return_button {
     background: var(--litreview-yellow);
     font-family: var(--copy-font-family);
     padding: calc(var(--base-font-size) * 0.618) calc(var(--base-font-size) * 1);
@@ -40,7 +40,7 @@ body {
     margin-top: 1.5rem;
 }
 
-.signup_button:hover, .login_button:hover, .home_register_button:hover {
+.signup_button:hover, .login_button:hover, .home_register_button:hover, .return_button:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 10px rgba(0,0,0,0.4);
 }

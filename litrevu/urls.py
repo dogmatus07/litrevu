@@ -17,13 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from reviews import views
-from reviews.views import RegisterView, LoginView, home, add_ticket
+from reviews.views import RegisterView, LoginView, home, add_ticket, edit_ticket, list_tickets, dashboard
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', home, name='home'),
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', LoginView.as_view(), name='login'),
-    path('add_ticket/', add_ticket, name='add_ticket')
+    path('add_ticket/', add_ticket, name='add_ticket'),
+    path('edit_ticket/<int:ticket_id>/', edit_ticket, name='edit_ticket'),
+    path('tickets/', list_tickets, name='list_tickets'),
+    path('dashboard/', dashboard, name='dashboard')
 
 ]
