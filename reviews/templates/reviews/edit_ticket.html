@@ -6,7 +6,7 @@
     <div class="row">
         <h2>Modifier le billet</h2>
         <form method="post" enctype="multipart/form-data" class="edit_ticket_form">
-            {% csrf_tocket %}
+            {% csrf_token %}
             {{ form.as_p }}
             <button type="submit" class="save_button">Enregistrer les modifications</button>
         </form>

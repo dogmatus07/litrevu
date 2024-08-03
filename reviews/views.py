@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
@@ -18,6 +18,7 @@ def home(request):
         'reviews': reviews
     }
     return render(request, 'reviews/home.html', context)
+
 
 class RegisterView(View):
     def get(self, request):
@@ -56,7 +57,7 @@ def dashboard(request):
 @login_required
 def list_tickets(request):
     tickets = Ticket.objects.filter(user=request.user)
-    return render(request, 'reviews/list_tickets', {'tickets': tickets})
+    return render(request, 'reviews/list_tickets.html', {'tickets': tickets})
 
 @login_required
 def add_ticket(request):
@@ -76,7 +77,7 @@ def add_ticket(request):
 
 @login_required
 def edit_ticket(request, ticket_id):
-    ticket = get_objetc_or_404(Ticket, id=ticket_id, user=request.user)
+    ticket = get_object_or_404(Ticket, id=ticket_id, user=request.user)
     if request.method == 'POST':
         form = TicketForm(request.POST, request.FILES, instance=ticket)
         if form.is_valid():

@@ -4,7 +4,23 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 class CustomUserManager(BaseUserManager):
+    """
+    Custom user manage. To create normal users and superusers
+    """
     def create_user(self, email, password=None, **extra_fields):
+        """
+        Creates and saves a normal user with his email and password
+
+        Args:
+            email (str) : email of the user
+            password (str): password of the user
+
+        Returns:
+            CustomUser : the user instance created
+
+        Raise:
+            ValueError : Raises error if email field is not set
+        """
         if not email:
             raise ValueError('Email field must be set')
         email = self.normalize_email(email)
@@ -14,11 +30,23 @@ class CustomUserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
+        """
+        Creates and saves a superuser with his email and password.
+
+        Args:
+            email (str): email of the superuser
+            password (str): password of the superuser
+            extra-fields : additional fields to add to the superuser
+        """
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         return self.create_user(email, password, **extra_fields)
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
+    """
+    Custom user model that extends the AbstractBaseUser and PermissionsMixin
+    Uses email as username
+    """
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
@@ -32,9 +60,18 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     def __str__(self):
+        """
+        Returns a string representation of the CustomUser
+        Returns:
+            str: email of the user
+        """
         return self.email
 
 class Ticket(models.Model):
+    """
+    Model that represents a ticket.
+    Can contain image, title and description
+    """
     title = models.CharField(max_length=128)
     description = models.TextField(max_length=2048, blank=True)
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -42,6 +79,11 @@ class Ticket(models.Model):
     time_created = models.DateTimeField(auto_now_add=True)
 
 class Review(models.Model):
+    """
+    Model that represents a review.
+    Includes a rating and text content.
+
+    """
     ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE)
     rating = models.PositiveSmallIntegerField(
         validators=[MinValueValidator(0), MaxValueValidator(5)])
@@ -51,6 +93,9 @@ class Review(models.Model):
     time_created = models.DateTimeField(auto_now_add=True)
 
 class UserFollows(models.Model):
+    """
+    Model that represents the following relationship between users.
+    """
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='following')
     followed_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='followed_by')
 
