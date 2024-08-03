@@ -1,10 +1,15 @@
 <!-- reviews/templates/reviews/login.html -->
 {% extends 'reviews/base.html' %}
 {% block content %}
-<h2>Connexion</h2>
-<form method="post" class="login_form">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="login_button">Se connecter</button>
-</form>
+<div class="container">
+    <div class="row">
+        <div class="col login_section">
+            <h2>Connexion</h2>
+            <form method="post" class="login">
+                {% csrf_token %}
+                {% include 'reviews/login_form.html' with form=login_form %}
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

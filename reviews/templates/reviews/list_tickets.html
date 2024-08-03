@@ -1,0 +1,19 @@
+<!-- reviews/templates/reviews/list_tickets.html -->
+{% extends 'reviews/base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h2>Mes billets</h2>
+        <ul>
+            {% for ticket in tickets %}
+            <li>
+                <h3>{{ ticket.title }}</h3>
+                <p>{{ ticket.description }}</p>
+                <a href="{% url 'edit_ticket' ticket.id %}">Modifier</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock %}
