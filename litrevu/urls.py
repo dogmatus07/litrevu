@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from reviews import views
 from reviews.views import RegisterView, LoginView, home, add_ticket, edit_ticket, list_tickets, dashboard
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +28,7 @@ urlpatterns = [
     path('add_ticket/', add_ticket, name='add_ticket'),
     path('edit_ticket/<int:ticket_id>/', edit_ticket, name='edit_ticket'),
     path('tickets/', list_tickets, name='list_tickets'),
-    path('dashboard/', dashboard, name='dashboard')
+    path('dashboard/', dashboard, name='dashboard'),
+    path('logout/', LogoutView.as_view(next_page='home'), name='logout')
 
 ]

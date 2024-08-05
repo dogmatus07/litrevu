@@ -4,15 +4,39 @@
         <title>LITRevu App</title>
         <link rel="stylesheet" href="{% static 'reviews/css/style.css' %}" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
-        <link rel="icon" href="{% static 'reviews/images/favicon.ico'%}" />
+        <link rel="icon" href="{% static 'reviews/images/favicon.ico' %}" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap">
     </head>
     <body>
         <header class="header">
             <img src="{% static 'reviews/images/logo.png'%}" alt="Logo officiel LITReview" class="logo">
+            <nav>
+                {% if user.is_authenticated %}
+                    <span>Bonjour {{ user.first_name|default:user.email }}</span> |
+                <div>
+                    <form action="{% url 'logout'%}" method="post" style="display-inline">
+                        {% csrf_token %}
+                        <button type="submit" style="background:none; border:none; padding:0;
+                        color:blue; text-decoration:underline; cursor:pointer">
+                            Se déconnecter
+                        </button>
+                    </form>
+                </div>
+                {% else %}
+                    <a href="{% url 'login' %}">Se connecter</a>
+                    <a href="{% url 'register' %}">S'inscrire</a>
+                {% endif %}
+            </nav>
         </header>
         {% block content %} {% endblock %}
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <footer class="footer">
             <p>&copy; {% now "Y" %} - LITReview - Tous droits réservés</p>
         </footer>

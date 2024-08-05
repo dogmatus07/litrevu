@@ -5,8 +5,18 @@ from django.contrib.auth.decorators import login_required
 from django.views import View
 from .forms import CustomUserCreationForm, CustomUserAuthenticationForm, TicketForm
 from .models import Ticket, Review
+from django.contrib import messages
 
 def home(request):
+    """
+    Homepage view that displays login form and registration invite
+
+    Args:
+        request: HttpRequest object
+
+    Returns:
+        HttpResponse object with the homepage template rendered includes context data
+    """
     login_form = CustomUserAuthenticationForm()
     register_form = CustomUserCreationForm()
     tickets = Ticket.objects.all()
@@ -21,11 +31,21 @@ def home(request):
 
 
 class RegisterView(View):
+    """
+    View for handling registration process
+    Methods: GET and POST
+    """
     def get(self, request):
+        """
+        Handle GET request to show the registration form
+        """
         form = CustomUserCreationForm()
         return render(request, 'reviews/register.html', {'form':form})
 
     def post(self, request):
+        """
+        Handle POST request to process the registration form data
+        """
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
@@ -34,33 +54,69 @@ class RegisterView(View):
         return render(request, 'reviews/register.html', {'form':form})
 
 class LoginView(View):
+    """
+    View for handling user login
+    Methods: GET and POST
+    """
     def get(self, request):
+        """
+        Handle the GET request to show the login form
+        """
         form = AuthenticationForm()
         return render(request, 'reviews/login.html', {'form':form})
 
     def post(self, request):
+        """
+        Handle the POST request to process the login form data
+        """
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
-            login(request, user)
-            messages.success(request, 'Vous êtes connecté')
-            return redirect('home')
+            if user:
+                login(request, user)
+                messages.success(request, 'Vous êtes bien connecté')
+                return redirect('dashboard')
+            else:
+                messages.error(request, 'Echec de la connexion, identifiant à vérifier')
         else:
-            messages.error(request, 'Echec de la connexion')
+            messages.error(request, 'Login failed. Please try again.')
+
         return render(request, 'reviews/login.html', {'form' : form})
 
 @login_required
 def dashboard(request):
-    pass
+    """
+    Dashboard view that displays user dashboard
+
+    Args:
+        request: HttpRequest object
+
+    Returns:
+        HttpResponse object with the dashboard template rendered includes context data
+    """
+    tickets = Ticket.objects.filter(user=request.user)
+    reviews = Review.objects.filter(user=request.user)
+    context = {
+        'tickets': tickets,
+        'reviews' : reviews
+    }
+    return render(request, 'reviews/dashboard.html', context)
 
 
 @login_required
 def list_tickets(request):
+    """
+    View to list the tickets created by the logged-in user
+    """
     tickets = Ticket.objects.filter(user=request.user)
     return render(request, 'reviews/list_tickets.html', {'tickets': tickets})
 
 @login_required
 def add_ticket(request):
+    """
+    View to add a new ticket.
+    Methods: GET and POST
+    """
     if request.method == 'POST':
         form = TicketForm(request.POST, request.FILES)
         if form.is_valid():
@@ -77,6 +133,9 @@ def add_ticket(request):
 
 @login_required
 def edit_ticket(request, ticket_id):
+    """
+    View to edit an existing ticket. Validate if the ticket belong to the logged-in user
+    """
     ticket = get_object_or_404(Ticket, id=ticket_id, user=request.user)
     if request.method == 'POST':
         form = TicketForm(request.POST, request.FILES, instance=ticket)

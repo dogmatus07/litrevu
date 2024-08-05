@@ -1,14 +1,14 @@
 <!-- reviews/templates/reviews/login_form.html -->
 
-<form method="post" class="login_form">
+<form method="post" action="{% url 'login' %}" class="login_form">
     {% csrf_token %}
     <div class="form_group">
-        <label for="id_username">Nom d'utilisateur</label>
-        <input type="text" name="username" autofocus required id="id_username" class="form_control" placeholder="Nom d'utilisateur">
+        <label for="id_username">Email</label>
+        <input type="email" name="username" autofocus required id="id_username" class="form_control" placeholder="E-mail">
     </div>
     <div class="form_group">
-        <label for="id_password">Mot de passe</label>
-        <input type="password" name="password" required id="id_password" class="form_control" placeholder="Mot de passe">
+        <label for="id_password">Password</label>
+        <input type="password" name="password" required id="id_password" class="form_control" placeholder="Password">
     </div>
-    <button type="submit" class="login_button">Se connecter</button>
+    <button type="submit" class="login_button">Log In</button>
 </form>

@@ -1,1 +1,19 @@
 <!-- reviews/templates/reviews/dashboard.html -->
+{% extends 'reviews/base.html' %}
+{% block content %}
+<div class="dashboard_container">
+    <div class="row">
+        <div class="col dashboard_main">
+            <h2>Bienvenue sur votre tableau de bord</h2>
+            <h3>Vos tickets</h3>
+            {% for ticket in tickets %}
+            <p>{{ ticket.title }}</p>
+            {% endfor %}
+            <h3>Vos Reviews</h3>
+            {% for review in reviews %}
+            <p>{{ review.headline }}</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
