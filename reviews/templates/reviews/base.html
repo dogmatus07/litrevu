@@ -11,21 +11,17 @@
     <body>
         <header class="header">
             <img src="{% static 'reviews/images/logo.png'%}" alt="Logo officiel LITReview" class="logo">
-            <nav>
+            <nav class="navigation">
                 {% if user.is_authenticated %}
                     <span>Bonjour {{ user.first_name|default:user.email }}</span> |
-                <div>
+                <div class="logout_container">
                     <form action="{% url 'logout'%}" method="post" style="display-inline">
                         {% csrf_token %}
-                        <button type="submit" style="background:none; border:none; padding:0;
-                        color:blue; text-decoration:underline; cursor:pointer">
+                        <button type="submit" class="logout_button">
                             Se déconnecter
                         </button>
                     </form>
                 </div>
-                {% else %}
-                    <a href="{% url 'login' %}">Se connecter</a>
-                    <a href="{% url 'register' %}">S'inscrire</a>
                 {% endif %}
             </nav>
         </header>

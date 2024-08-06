@@ -6,13 +6,69 @@
         <div class="col dashboard_main">
             <h2>Bienvenue sur votre tableau de bord</h2>
             <h3>Vos tickets</h3>
-            {% for ticket in tickets %}
-            <p>{{ ticket.title }}</p>
-            {% endfor %}
+            {% if ticket %}
+                <div class="ticket_section_dashboard">
+                <table border="1" class="table_custom">
+                    <thead>
+                        <tr>
+                            <th>Titre</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                            <th>Créé le :</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    {% for ticket in tickets %}
+                        <tbody>
+                            <tr>
+                                <td>{{ ticket.title }}</td>
+                                <td>{{ ticket.description }}</td>
+                                <td>
+                                    {% if ticket.image %}
+                                        <img src="{{ ticket.image.url }}" alt="{{ ticket.title }}"></td>
+                                    {% else %}
+                                        Pas d'image
+                                    {% endif %}
+                                <td>{{ ticket.time_created }}</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="dropbtn">Actions</button>
+                                        <div class="dropdown_content">
+                                            <a href="{% url 'edit_ticket' ticket.id %}">Modifier</a>
+                                            <!-- Delete ticket form-->
+                                            <form method="POST" action="{% url 'delete_ticket' ticket.id %}">
+                                                {% csrf_token %}
+                                                <input
+                                                        type="submit"
+                                                        value="Supprimer"
+                                                        onclick="return confirm('Etes-vous sûr(e) de vouloir
+                                                        supprimer ce bilelt ?)">
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+            {% else %}
+                <p>Pas encore de billet <a href="{% url 'add_ticket' %}">Ajouter</a></p>
+            {% endif %}
             <h3>Vos Reviews</h3>
-            {% for review in reviews %}
-            <p>{{ review.headline }}</p>
-            {% endfor %}
+            {% if review %}
+                {% for review in reviews %}
+                    <p>{{ review.ticket }}</p>
+                    <p>{{ review.headline }}</p>
+                    <p>{{ review.rating }}</p>
+                    <p>{{ review.body }}</p>
+                    <p>Créé le {{ review.time_created }}</p>
+                {% endfor %}
+            {% else %}
+                <p>Pas encore de critique</p>
+            {% endif %}
+
         </div>
     </div>
 </div>

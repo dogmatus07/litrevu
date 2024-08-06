@@ -2,14 +2,16 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.views import View
 from .forms import CustomUserCreationForm, CustomUserAuthenticationForm, TicketForm
-from .models import Ticket, Review
+from .models import Ticket, Review, UserFollows
 from django.contrib import messages
 
 def home(request):
     """
-    Homepage view that displays login form and registration invite
+    Homepage view that displays login form and registration invite.
+    If user is authenticated, redirect to dashboard
 
     Args:
         request: HttpRequest object
@@ -17,6 +19,9 @@ def home(request):
     Returns:
         HttpResponse object with the homepage template rendered includes context data
     """
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+
     login_form = CustomUserAuthenticationForm()
     register_form = CustomUserCreationForm()
     tickets = Ticket.objects.all()
@@ -102,6 +107,28 @@ def dashboard(request):
     }
     return render(request, 'reviews/dashboard.html', context)
 
+@login_required
+def feed(request):
+    """
+    View to get :
+        the actual user,
+        followed users,
+        ticket of the user and the followed users,
+        reviews of the tickets,
+
+    Returns: HttpRequest, context data
+    """
+    user = request.user
+    followed_users = UserFollows.objects.filter(user=user).values_list('followed_user', flat=True)
+    tickets = Ticket.objects.filter(user__in=followed_users).order_by('-time_created')
+    reviews = Review.objects.filter(ticket__user__in=followed_users).order_by('-time_created')
+
+    context = {
+        'tickets': tickets,
+        'reviews': reviews
+    }
+    return render(request, 'reviews/feed.html', context)
+
 
 @login_required
 def list_tickets(request):
@@ -123,7 +150,7 @@ def add_ticket(request):
             ticket = form.save(commit=False)
             ticket.user = request.user # assign the ticket to the current user
             ticket.save()
-            return redirect('home') # redirect to homepage
+            return redirect('dashboard') # redirect to dashboard
         else:
             print(form.errors)
     else:
@@ -148,3 +175,20 @@ def edit_ticket(request, ticket_id):
     else:
         form = TicketForm(instance=ticket)
     return render(request, 'reviews/edit_ticket.html', {'form': form, 'ticket': ticket})
+
+@login_required
+@require_POST
+def delete_ticket(request, ticket_id):
+    """
+    View to delete a ticket owned by a logged in user
+    Require POST method for security
+    Require that the user is authenticated
+    """
+    ticket = get_object_or_404(Ticket, id=ticket_id, user=request.user)
+    if request.method == 'POST':
+        ticket.delete()
+        messages.success(request, 'Billet supprimé avec succès')
+        return redirect('dashboard')
+    else:
+        messages.error(request, 'Erreur lors de la suppression')
+        return redirect('dashboard')

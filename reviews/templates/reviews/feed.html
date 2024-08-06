@@ -1,0 +1,28 @@
+<!-- reviews/templates/reviews/feed.html -->
+{% extends 'reviews/base.html' %}
+{% block content %}
+<div class="feed_container">
+    <div class="row">
+        <div class="col">
+            <h1>Flux</h1>
+            <h2>Billets</h2>
+            {% for ticket in tickets %}
+                <div>
+                    <h3>{{ ticket.title }}</h3>
+                    <p>{{ ticket.description }}</p>
+                    <small>Créé par {{ ticket.user.email }} le {{ ticket.time_created }}</small>
+                </div>
+            {% endfor %}
+            <h2>Critiques</h2>
+            {% for review in reviews %}
+                <div>
+                    <h3>{{ review.headline }}</h3>
+                    <span>{{ review.rating }}</span>
+                    <p>{{ review.body }}</p>
+                    <small>Créé par {{ review.user.email }} le {{ review.time_created }}</small>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
