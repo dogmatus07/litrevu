@@ -3,11 +3,17 @@
 {% load static %}
 {% block content %}
 
-<div class="ticket container mt-4">
+<div class="container">
+    <div class="row">
+        <div class="col text-left">
+            <h2>Modifier le billet</h2>
+        </div>
+    </div>
+</div>
+<div class="ticket container mt-1">
     <div class="row">
         <!-- left column -->
         <div class="col-md-8">
-            <h2 class="mb-3">Modifier le billet</h2>
             <form
                     method="post"
                     enctype="multipart/form-data"
@@ -21,23 +27,31 @@
                     <label>Description</label>
                     {{ form.description }}
                 </div>
-                <button
+                <div class="form-group justify-content-start pb-1 d-flex edit-ticket-button-group">
+                    <button
                         type="submit"
-                        class="btn btn-primary save-button">
+                        class="btn btn-primary mr-2 save-button">
                     <i class="fa fa-save"></i> Enregistrer les modifications
-                </button>
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-danger cancel-button"
+                        onclick="window.location.href='{% url 'dashboard' %}'">
+                    <i class="fa fa-ban"></i> Annuler
+                    </button>
+                </div>
             </form>
         </div>
         <!-- right column -->
-        <div class="col-md-4">
-            <div class="image-section">
+        <div class="col-md-4 d-flex flex-column justify-content-between">
+            <div class="image-section h-100 d-flex flex-column justify-content-between">
                 <img
                         src="{{ ticket.image.url }}"
                         alt="{{ ticket.title }}"
                         class="img-fluid current-ticket-image">
                 <label
                         for="id_image"
-                        class="mt-3">
+                        class="mt-1">
                     Modifier l'image
                 </label>
                 {{ form.image }}

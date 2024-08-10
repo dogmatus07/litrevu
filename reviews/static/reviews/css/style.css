@@ -87,7 +87,8 @@ p {
 .signup_button,
 .login_button, .home_register_button,
 .return_button, .custom-button-primary.btn-primary,
-.save-button.btn-primary {
+.save-button.btn-primary,
+.cancel-button.btn-primary {
     background: var(--litreview-yellow);
     font-family: var(--copy-font-family);
     padding: calc(var(--base-font-size) * 0.618) calc(var(--base-font-size) * 1);
@@ -104,7 +105,8 @@ p {
     margin-top: 1.5rem;
 }
 
-.custom-button-primary.btn-primary {
+.custom-button-primary.btn-primary,
+.cancel-button.btn-primary {
     display: inline-block;
 }
 
@@ -114,12 +116,21 @@ p {
 .return_button:hover,
 .custom-button-danger.btn-danger:hover,
 .custom-button-primary.btn-primary:hover,
-.save-button.btn-primary:hover {
+.save-button.btn-primary:hover,
+.cancel-button.btn-danger:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 10px rgba(0,0,0,0.4);
 }
 
-.custom-button-danger.btn-danger {
+.edit-ticket-button-group {
+    display: flex;
+    justify-content: left;
+    gap: var(--base-font-size);
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.custom-button-danger.btn-danger, .cancel-button.btn-danger {
     background: var(--litreview-black);
     font-family: var(--copy-font-family);
     padding: calc(var(--base-font-size) * 0.618) calc(var(--base-font-size) * 1);
@@ -140,6 +151,15 @@ p {
     justify-content: center;
     padding: calc(var(--base-font-size) * 0.618);
     border: solid 1px var(--litreview-dark-gray);
+}
+
+.footer {
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    padding: 10px 0;
+    margin-top: 2rem;
 }
 
 .logo {
@@ -206,7 +226,7 @@ p {
     border-sizing: border-box;
 }
 
-.ticket .form-group {
+.ticket {
     margin-bottom: 1rem;
 }
 
@@ -231,16 +251,29 @@ p {
 }
 
 .edit-ticket-form, .image-section {
-    background: white;
+    display: flex;
+    flex-direction: column;
+    background: var(--litreview-light-gray);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    height: 100%;
 }
 
 .image-section {
-    display: flex;
-    flex-direction: column;
-    justify-content : space-between;
+    justify-content: space-between;
+    object-fit: cover;
+    flex-grow: 1;
+}
+
+.current-ticket-image {
+    width: 100%;
+    height: auto;
+    object-fit: scale-down;
+}
+
+.form-group {
+    margin-bottom: 10px;
 }
 
 /* Home */
