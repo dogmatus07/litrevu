@@ -1,4 +1,4 @@
-/* main rules */
+/* Global */
 :root {
     --litreview-yellow: #FFE01B;
     --litreview-black: #241C15;
@@ -23,6 +23,25 @@ body {
     box-sizing: border-box;
 }
 
+/* global settings */
+h1, h2, h3, h4 {
+    font-family: var(--title-font-family);
+}
+
+h1 {
+    font-size: var(--cta-title-font-size);
+}
+
+h2 {
+    font-size: var(--cta-subtitle-font-size);
+}
+
+p {
+    font-family: var(--copy-font-family);
+    font-size: var(--copy-size);
+}
+
+/* navigations */
 .navigation {
     display: inline-flex;
     justify-content: space-around;
@@ -33,23 +52,42 @@ body {
 }
 
 /* Dashboard section */
-.ticket_section_dashboard {
-    padding: calc(var(--base-font-size) * 0.818);
-    margin: calc(var(--base-font-size) * 0.818) auto;
-    width: 90%;
-}
-
-.table_custom {
+.card-img {
     width: 100%;
-    border-collapse: collapse;
+    height: auto;
+    max-height: calc(var(--base-font-size) * 17.618);
+    object-fit: scale-down;
 }
 
-.table_custom th, .table_custom td {
-    padding: calc(var(--base-font-size) * 0.818);
-    text-align: center;
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.signup_button, .login_button, .home_register_button, .return_button {
+.card-footer {
+    padding: 1rem;
+    background: transparent !important;
+}
+
+.card {
+    display: flex;
+    background: var(--litreview-light-gray) !important;
+    flex-direction: row;
+    align-items: center;
+    overflow: hidden;
+    border-radius: calc(var(--base-font-size) * 1.618) !important;
+}
+
+.img-col {
+    border-right: 1px solid rgba(0,0,0,.125);
+}
+
+/* Buttons */
+.signup_button,
+.login_button, .home_register_button,
+.return_button, .custom-button-primary.btn-primary,
+.save-button.btn-primary {
     background: var(--litreview-yellow);
     font-family: var(--copy-font-family);
     padding: calc(var(--base-font-size) * 0.618) calc(var(--base-font-size) * 1);
@@ -61,16 +99,42 @@ body {
     text-align: center;
     cursor: pointer;
     transition: transform 0.3s ease box-shadow 0.3s ease;
-    transform: translate(0,0)
+    transform: translate(0,0);
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     margin-top: 1.5rem;
 }
 
-.signup_button:hover, .login_button:hover, .home_register_button:hover, .return_button:hover {
+.custom-button-primary.btn-primary {
+    display: inline-block;
+}
+
+.signup_button:hover,
+.login_button:hover,
+.home_register_button:hover,
+.return_button:hover,
+.custom-button-danger.btn-danger:hover,
+.custom-button-primary.btn-primary:hover,
+.save-button.btn-primary:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 10px rgba(0,0,0,0.4);
 }
 
+.custom-button-danger.btn-danger {
+    background: var(--litreview-black);
+    font-family: var(--copy-font-family);
+    padding: calc(var(--base-font-size) * 0.618) calc(var(--base-font-size) * 1);
+    border: solid 1px !important;
+    border-radius: calc(var(--base-font-size) * 1.618);
+    color: var(--litreview-white);
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease box-shadow 0.3s ease;
+    transform: translate(0,0) !important;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-top: 1.5rem;
+}
+/* headers & footers */
 .header, .footer {
     display: flex;
     justify-content: center;
@@ -84,6 +148,7 @@ body {
     margin: calc(var(--base-font-size) * 0.618);
 }
 
+/* register & login */
 .container, .register_container {
     display: flex;
     justify-content: center;
@@ -117,7 +182,6 @@ body {
     padding: calc(var(--base-font-size) * 1.618);
 }
 
-/* register.html, login.html */
 .join .login {
     flex: 1;
     display: flex;
@@ -128,6 +192,7 @@ body {
     padding: calc(var(--base-font-size) * 1.618);
 }
 
+/* forms */
 .login_form label, .register_form label {
     visibility: hidden;
 }
@@ -141,6 +206,44 @@ body {
     border-sizing: border-box;
 }
 
+.ticket .form-group {
+    margin-bottom: 1rem;
+}
+
+.ticket label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.ticket input[type="text"], .ticket textarea {
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+}
+
+.current-image {
+    width: 100%;
+    height: auto;
+    border-radius: 0.25rem;
+    margin-top: 1rem;
+}
+
+.edit-ticket-form, .image-section {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.image-section {
+    display: flex;
+    flex-direction: column;
+    justify-content : space-between;
+}
+
+/* Home */
 .login_section {
     flex: 1;
     display: flex;

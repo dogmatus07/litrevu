@@ -1,75 +1,50 @@
 <!-- reviews/templates/reviews/dashboard.html -->
 {% extends 'reviews/base.html' %}
 {% block content %}
-<div class="dashboard_container">
+<div class="container">
     <div class="row">
-        <div class="col dashboard_main">
-            <h2>Bienvenue sur votre tableau de bord</h2>
-            <h3>Vos tickets</h3>
-            {% if ticket %}
-                <div class="ticket_section_dashboard">
-                <table border="1" class="table_custom">
-                    <thead>
-                        <tr>
-                            <th>Titre</th>
-                            <th>Description</th>
-                            <th>Image</th>
-                            <th>Créé le :</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    {% for ticket in tickets %}
-                        <tbody>
-                            <tr>
-                                <td>{{ ticket.title }}</td>
-                                <td>{{ ticket.description }}</td>
-                                <td>
-                                    {% if ticket.image %}
-                                        <img src="{{ ticket.image.url }}" alt="{{ ticket.title }}"></td>
-                                    {% else %}
-                                        Pas d'image
-                                    {% endif %}
-                                <td>{{ ticket.time_created }}</td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button class="dropbtn">Actions</button>
-                                        <div class="dropdown_content">
-                                            <a href="{% url 'edit_ticket' ticket.id %}">Modifier</a>
-                                            <!-- Delete ticket form-->
-                                            <form method="POST" action="{% url 'delete_ticket' ticket.id %}">
-                                                {% csrf_token %}
-                                                <input
-                                                        type="submit"
-                                                        value="Supprimer"
-                                                        onclick="return confirm('Etes-vous sûr(e) de vouloir
-                                                        supprimer ce bilelt ?)">
-                                            </form>
-                                        </div>
-                                    </div>
-
-                                </td>
-                            </tr>
-                        </tbody>
-                    {% endfor %}
-                </table>
-            </div>
-            {% else %}
-                <p>Pas encore de billet <a href="{% url 'add_ticket' %}">Ajouter</a></p>
-            {% endif %}
-            <h3>Vos Reviews</h3>
-            {% if review %}
-                {% for review in reviews %}
-                    <p>{{ review.ticket }}</p>
-                    <p>{{ review.headline }}</p>
-                    <p>{{ review.rating }}</p>
-                    <p>{{ review.body }}</p>
-                    <p>Créé le {{ review.time_created }}</p>
-                {% endfor %}
-            {% else %}
-                <p>Pas encore de critique</p>
-            {% endif %}
-
+        <div class="col mb-3">
+            <h2 class="mb-3">Vos tickets</h2>
         </div>
+    </div>
+</div>
+<div class="container mt-2">
+    <div class="row">
+        {% for ticket in tickets %}
+        <div class="col-12 mb-2">
+            <div class="card mb-3 p-3" style="flex-direction: row;">
+                <div class="row no-gutters">
+                    <div class="col-md-4 img-col">
+                        <img
+                                src="{{ ticket.image.url }}"
+                                alt="{{ ticket.title }}"
+                                class="card-img">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ ticket.title }}</h5>
+                            <p class="card-text">{{ ticket.description }}</p>
+                            <p class="card-text"><small class="text-muted">Créé le : {{ ticket.time_created }}</small></p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{% url 'edit_ticket' ticket.id %}" class="btn btn-primary custom-button-primary">
+                                <i class="fa fa-pencil-alt"></i> Modifier
+                            </a>
+                            <form method="post" action="{% url 'delete_ticket' ticket.id%}" style="display: inline">
+                                {% csrf_token %}
+                                <button
+                                        type="submit"
+                                        class="btn btn-danger custom-button-danger"
+                                        onclick="return confirm('Etes-vous sûr de vouloir supprimer cet élément ?);">
+                                    <i class="fa fa-trash"></i> Supprimer
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

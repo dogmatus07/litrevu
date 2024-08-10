@@ -7,7 +7,7 @@ from django.views import View
 from .forms import CustomUserCreationForm, CustomUserAuthenticationForm, TicketForm
 from .models import Ticket, Review, UserFollows
 from django.contrib import messages
-
+from django.forms import FileInput
 def home(request):
     """
     Homepage view that displays login form and registration invite.
@@ -169,11 +169,13 @@ def edit_ticket(request, ticket_id):
         if form.is_valid():
             form.save()
             messages.success(request, 'Le billet a été modifié avec succès')
-            return redirect('home')
+            return redirect('dashboard')
         else:
             messages.error(request, 'Des erreurs sont présentes dans le formulaire')
     else:
         form = TicketForm(instance=ticket)
+        form.fields['image'].widget = FileInput()
+
     return render(request, 'reviews/edit_ticket.html', {'form': form, 'ticket': ticket})
 
 @login_required
