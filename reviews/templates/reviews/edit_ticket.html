@@ -3,17 +3,11 @@
 {% load static %}
 {% block content %}
 
-<div class="container">
-    <div class="row">
-        <div class="col text-left">
-            <h2>Modifier le billet</h2>
-        </div>
-    </div>
-</div>
 <div class="ticket container mt-1">
     <div class="row">
         <!-- left column -->
         <div class="col-md-8">
+            <h2 class="mb-4 mt-4 edit-ticket-title">Modifier le billet</h2>
             <form
                     method="post"
                     enctype="multipart/form-data"
@@ -44,7 +38,7 @@
         </div>
         <!-- right column -->
         <div class="col-md-4 d-flex flex-column justify-content-between">
-            <div class="image-section h-100 d-flex flex-column justify-content-between">
+            <div class="image-section d-flex flex-column justify-content-between">
                 <img
                         src="{{ ticket.image.url }}"
                         alt="{{ ticket.title }}"

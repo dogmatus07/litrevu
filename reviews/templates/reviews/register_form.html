@@ -1,6 +1,6 @@
 <!-- reviews/templates/reviews/register_form.html -->
 
-<form method="post" action="" class="join">
+<form method="post" action="" enctype="multipart/form-data" class="join">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="signup_button">S'inscrire</button>

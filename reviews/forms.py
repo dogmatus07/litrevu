@@ -13,7 +13,7 @@ class CustomUserCreationForm(UserCreationForm):
         Meta class to specify the model to be used and the fields to be included
         """
         model = CustomUser
-        fields = ('email', 'first_name', 'last_name', 'password1', 'password2')
+        fields = ('email', 'first_name', 'last_name', 'password1', 'password2', 'profile_picture')
 
     def save(self, commit=True):
         """

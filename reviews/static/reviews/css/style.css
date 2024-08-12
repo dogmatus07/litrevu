@@ -15,6 +15,11 @@
     --copy-font-family: 'Open Sans', sans-serif;
     --title-font-family: 'Merriweather', serif;
     --copy-small: calc(var(--base-font-size) * 0.818);
+    --primary-color: #2c3e50;
+    --secondry-color: #34495e;
+    --accent-color: #1abc9c;
+    --light-color: #ecf0f1;
+    --dark-color: #2c3e50;
 }
 
 body {
@@ -83,12 +88,54 @@ p {
     border-right: 1px solid rgba(0,0,0,.125);
 }
 
+/* Sidebar Layout */
+.sidebar-admin-ui {
+    margin: 0;
+    padding: 0;
+    background: var(--light-color);
+}
+
+.sidebar {
+    height: 100vh;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white;
+    padding-top: 20px;
+    z-index: 2000;
+    border-radius: 10px;
+}
+
+.sidebar .nav-item a {
+    color: var(--dark-color);
+    display: block;
+    text-decoration: none;
+}
+
+.nav-item {
+    margin: 1rem;
+}
+.sidebar .nav-item a:hover {
+    background-color: var(--secondary-color);
+    color: var(--accent-color);
+    padding-left: 20px;
+    transition: 0.3s;
+}
+/* content */
+.content {
+    margin-left: 250px;
+    padding: 20px;
+}
+
 /* Buttons */
 .signup_button,
 .login_button, .home_register_button,
 .return_button, .custom-button-primary.btn-primary,
 .save-button.btn-primary,
-.cancel-button.btn-primary {
+.cancel-button.btn-primary,
+.add-ticket-button.btn-primary,
+.add-review-button.btn-primary {
     background: var(--litreview-yellow);
     font-family: var(--copy-font-family);
     padding: calc(var(--base-font-size) * 0.618) calc(var(--base-font-size) * 1);
@@ -117,7 +164,9 @@ p {
 .custom-button-danger.btn-danger:hover,
 .custom-button-primary.btn-primary:hover,
 .save-button.btn-primary:hover,
-.cancel-button.btn-danger:hover {
+.cancel-button.btn-danger:hover,
+.add-ticket-button.btn btn-primary:hover,
+.add-review-button.btn-primary {
     transform: translateY(-3px);
     box-shadow: 0 6px 10px rgba(0,0,0,0.4);
 }
@@ -154,12 +203,14 @@ p {
 }
 
 .footer {
-    width: 100%;
+    width: calc(100% - 250px);
+    margin-left: 250px;
     position: relative;
     bottom: 0;
     left: 0;
     padding: 10px 0;
     margin-top: 2rem;
+    z-index: 1000;
 }
 
 .logo {
@@ -212,6 +263,24 @@ p {
     padding: calc(var(--base-font-size) * 1.618);
 }
 
+.profile-picture, .no-profile-picture {
+    width: 40px;
+    height: 40px;
+    border-radius : 50%;
+    object-fit: cover;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-greetings, .logout_button, .logout_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .5rem;
+}
+
 /* forms */
 .login_form label, .register_form label {
     visibility: hidden;
@@ -257,19 +326,20 @@ p {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    height: 100%;
+    height: auto;
 }
 
 .image-section {
     justify-content: space-between;
-    object-fit: cover;
+    object-fit: scale-down;
     flex-grow: 1;
 }
 
 .current-ticket-image {
     width: 100%;
+    padding: calc(var--base-font-size) * 0.618);
     height: auto;
-    object-fit: scale-down;
+    object-fit: contain;
 }
 
 .form-group {

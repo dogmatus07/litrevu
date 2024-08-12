@@ -51,11 +51,11 @@ class RegisterView(View):
         """
         Handle POST request to process the registration form data
         """
-        form = CustomUserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('home')
+            return redirect('dashboard')
         return render(request, 'reviews/register.html', {'form':form})
 
 class LoginView(View):
