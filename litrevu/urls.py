@@ -24,7 +24,8 @@ from reviews.views import RegisterView, \
     edit_ticket, \
     list_tickets, \
     dashboard, \
-    feed, delete_ticket
+    feed, delete_ticket,\
+    add_review
 from django.contrib.auth.views import LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -37,6 +38,7 @@ urlpatterns = [
     path('add_ticket/', add_ticket, name='add_ticket'),
     path('edit_ticket/<int:ticket_id>/', edit_ticket, name='edit_ticket'),
     path('delete_ticket/<int:ticket_id>/', delete_ticket, name='delete_ticket'),
+    path('add_review/<int:ticket_id>/', add_review, name='add_review'),
     path('tickets/', list_tickets, name='list_tickets'),
     path('dashboard/', dashboard, name='dashboard'),
     path('logout/', LogoutView.as_view(next_page='home'), name='logout'),

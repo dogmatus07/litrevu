@@ -8,6 +8,8 @@ from .forms import CustomUserCreationForm, CustomUserAuthenticationForm, TicketF
 from .models import Ticket, Review, UserFollows
 from django.contrib import messages
 from django.forms import FileInput
+
+
 def home(request):
     """
     Homepage view that displays login form and registration invite.
@@ -195,6 +197,7 @@ def delete_ticket(request, ticket_id):
         messages.error(request, 'Erreur lors de la suppression')
         return redirect('dashboard')
 
+@login_required
 def add_review(request, ticket_id):
     """
     View to add a new review on a ticket
@@ -202,6 +205,7 @@ def add_review(request, ticket_id):
     :param ticket_id:
     :return:
     """
+    ticket = get_object_or_404(Ticket, id=ticket_id)
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         if form.is_valid():
@@ -215,3 +219,9 @@ def add_review(request, ticket_id):
             messages.error(request, 'Des erreurs sont présentes dans ce formulaire')
     else:
         form = ReviewForm()
+
+    context = {
+        'form': form,
+        'ticket': ticket
+    }
+    return render(request, 'reviews/add_review.html', context)

@@ -2,3 +2,11 @@
 {% extends 'reviews/base.html' %}
 {% block content %}
 
+<h2>Publier un avis pour le billet : "{{ ticket.title }}"</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Soumettre</button>
+    </form>
+
+{% endblock %}
