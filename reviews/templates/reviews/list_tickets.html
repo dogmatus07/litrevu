@@ -1,24 +1,98 @@
 <!-- reviews/templates/reviews/list_tickets.html -->
 {% extends 'reviews/base.html' %}
+
 {% block content %}
-<div class="container">
+<!--<div class="container">
     <div class="row">
-        <h2>Mes billets</h2>
-        <ul>
-            {% for ticket in tickets %}
-            <li>
-                <h3>{{ ticket.title }}</h3>
-                <p>{{ ticket.description }}</p>
-                {% if ticket.image %}
-                    <img src="{{ ticket.image.url }}" alt="Image du billet">
-                <a href="{% url 'edit_ticket' ticket.id %}">Modifier</a>
-                {% else %}
-                    <p>Ce billet n'a pas d'image</p>
-                {% endif %}
-            </li>
-            {% endfor %}
-        </ul>
+        <div class="col mb-3">
+            <h2 class="mb-3">Vos tickets</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Image</th>
+                        <th scope="col">Titre</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Date de création</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in tickets %}
+                    <tr>
+                        <td>
+                            <img src="{{ ticket.image.url }}" alt="{{ ticket.title }}" class="img-fluid" style="max-width: 100px;">
+                        </td>
+                        <td>{{ ticket.title }}</td>
+                        <td>{{ ticket.description }}</td>
+                        <td>{{ ticket.time_created }}</td>
+                        <td>
+                            <a href="{% url 'edit_ticket' ticket.id %}" class="btn btn-primary btn-sm">
+                                <i class="fa fa-pencil-alt"></i> Modifier
+                            </a>
+                            <form method="post" action="{% url 'delete_ticket' ticket.id %}" style="display: inline">
+                                {% csrf_token %}
+                                <button
+                                    type="submit"
+                                    class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Etes-vous sûr de vouloir supprimer cet élément ?');">
+                                    <i class="fa fa-trash"></i> Supprimer
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
-
+-->
+<div class="container d-flex flex-column">
+    <div class="row">
+        <div class="col mb-3">
+            <h2 class="mb-3">Vos tickets</h2>
+        </div>
+    </div>
+    <div class="row d-flex flex-column">
+        {% for ticket in tickets %}
+        <div class="col-12 mb-2">
+            <div class="card bg-white mb-3 p-3">
+                <div class="row no-gutters">
+                    <div class="col-md-4 justify-content-center">
+                        <img
+                            src="{{ ticket.image.url }}"
+                            alt="{{ ticket.title }}"
+                            class="card-img">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ ticket.title }}</h5>
+                            <p class="card-text">{{ ticket.description }}</p>
+                            <p class="card-text"><small class="text-muted">Créé le : {{ ticket.time_created }}</small></p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{% url 'edit_ticket' ticket.id %}" class="btn btn-primary custom-button-primary">
+                                <i class="fa fa-pencil-alt"></i> Modifier
+                            </a>
+                            <form method="post" action="{% url 'delete_ticket' ticket.id %}" style="display: inline">
+                                {% csrf_token %}
+                                <button
+                                    type="submit"
+                                    class="btn btn-danger custom-button-danger"
+                                    onclick="return confirm('Etes-vous sûr de vouloir supprimer cet élément ?');">
+                                    <i class="fa fa-trash"></i> Supprimer
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import CustomUser, Ticket
+from .models import CustomUser, Ticket, Review
 
 class CustomUserCreationForm(UserCreationForm):
     """
@@ -51,3 +51,15 @@ class TicketForm(forms.ModelForm):
         """
         model = Ticket
         fields = ['title', 'description', 'image']
+
+class ReviewForm(forms.ModelForm):
+    """
+    From to create reviews
+    """
+    class Meta:
+        model = Review
+        fields = ['rating', 'headline', 'body']
+        widgets = {
+            'body': forms.Textarea(attrs={'rows': 5}),
+            'rating': forms.RadioSelect(),
+        }

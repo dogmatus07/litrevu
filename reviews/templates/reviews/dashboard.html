@@ -1,24 +1,23 @@
 <!-- reviews/templates/reviews/dashboard.html -->
 {% extends 'reviews/base.html' %}
 {% block content %}
+<!--
 <div class="container">
     <div class="row">
         <div class="col mb-3">
             <h2 class="mb-3">Vos tickets</h2>
         </div>
     </div>
-</div>
-<div class="container mt-2">
     <div class="row">
         {% for ticket in tickets %}
         <div class="col-12 mb-2">
-            <div class="card mb-3 p-3" style="flex-direction: row;">
+            <div class="card mb-3 p-3">
                 <div class="row no-gutters">
-                    <div class="col-md-4 img-col">
+                    <div class="col-md-4">
                         <img
-                                src="{{ ticket.image.url }}"
-                                alt="{{ ticket.title }}"
-                                class="card-img">
+                            src="{{ ticket.image.url }}"
+                            alt="{{ ticket.title }}"
+                            class="card-img">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -30,12 +29,12 @@
                             <a href="{% url 'edit_ticket' ticket.id %}" class="btn btn-primary custom-button-primary">
                                 <i class="fa fa-pencil-alt"></i> Modifier
                             </a>
-                            <form method="post" action="{% url 'delete_ticket' ticket.id%}" style="display: inline">
+                            <form method="post" action="{% url 'delete_ticket' ticket.id %}" style="display: inline">
                                 {% csrf_token %}
                                 <button
-                                        type="submit"
-                                        class="btn btn-danger custom-button-danger"
-                                        onclick="return confirm('Etes-vous sûr de vouloir supprimer cet élément ?);">
+                                    type="submit"
+                                    class="btn btn-danger custom-button-danger"
+                                    onclick="return confirm('Etes-vous sûr de vouloir supprimer cet élément ?');">
                                     <i class="fa fa-trash"></i> Supprimer
                                 </button>
                             </form>
@@ -47,4 +46,14 @@
         {% endfor %}
     </div>
 </div>
+-->
+<!--<div class="row">
+    <div class="col mb-3 mt-3">
+        <div class="card bg-white">
+            <div class="card-body">
+
+            </div>
+        </div>
+    </div>
+</div>-->
 {% endblock %}

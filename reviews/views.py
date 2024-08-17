@@ -4,7 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.views import View
-from .forms import CustomUserCreationForm, CustomUserAuthenticationForm, TicketForm
+from .forms import CustomUserCreationForm, CustomUserAuthenticationForm, TicketForm, ReviewForm
 from .models import Ticket, Review, UserFollows
 from django.contrib import messages
 from django.forms import FileInput
@@ -194,3 +194,24 @@ def delete_ticket(request, ticket_id):
     else:
         messages.error(request, 'Erreur lors de la suppression')
         return redirect('dashboard')
+
+def add_review(request, ticket_id):
+    """
+    View to add a new review on a ticket
+    :param request:
+    :param ticket_id:
+    :return:
+    """
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=false)
+            review.ticket = ticket
+            review.user = request.user
+            review.save()
+            messages.success(request, 'Votre avis a été publié avec succès')
+            return redirect('dashboard')
+        else:
+            messages.error(request, 'Des erreurs sont présentes dans ce formulaire')
+    else:
+        form = ReviewForm()

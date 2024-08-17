@@ -1,33 +1,31 @@
 {% load static %}
-<div class="d-flex" id="wrapper">
+<div id="wrapper" class="d-flex">
     <!-- Sidebar -->
-    <div class="bg-dark border-right" id="sidebar-wrapper">
-        <div class="sidebar-heading text-center">
-            <img src="{% static 'reviews/images/logo-light.png' %}" class="logo">
+    <div id="sidebar-wrapper">
+        <div class="sidebar-heading">
+            <img src="{% static 'reviews/images/logo.png'%}" alt="Logo officiel LITReview" class="logo">
         </div>
-        <div class="list-group list-group-flush">
-            <a href="{% url 'list_tickets' %}" class="list-group-item list-group-item-action bg-dark text-white">
-                <li class="fa-solid fa-ticket mr-1"></li>
-                Mes billets</a>
-            <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-                <li class="fa-sharp fa-solid fa-star mr-1"></li>
-                Mes critiques</a>
-            <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
-                <li class="fa-solid fa-users mr-1"></li>
-                Abonnements</a>
-            <a href="{% url 'feed' %}" class="list-group-item list-group-item-action bg-dark text-white">
-                <li class="fa-solid fa-rss mr-1"></li>
-                Flux</a>
-        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="{% url 'list_tickets' %}">
+                <i class="fa-solid fa-ticket mr-1"></i>
+                Mes billets</a></li>
+            <li class="list-group-item"><a href="#">
+                <i class="fa-sharp fa-solid fa-star mr-1"></i>
+                Mes critiques</a></li>
+            <li class="list-group-item"><a href="#">
+                <i class="fa-solid fa-users mr-1"></i>
+                Abonnements</a></li>
+            <li class="list-group-item"><a href="{% url 'feed' %}">
+                <i class="fa-solid fa-rss mr-1"></i>
+                Flux</a></li>
+        </ul>
     </div>
     <!-- /#sidebar-wrapper -->
-    <!-- Page Content -->
-    <div id="page-content-wrapper" class="d-flex flex-column">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-            <button class="btn btn-primary" id="menu-toggle">
-                <i class="fas fa-bars primary-text fs-4 me-3"></i>
-            </button>
 
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom sticky-top">
+            <button class="btn mt-1" id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0 d-flex align-items-center">
                     <li class="nav-item active">
@@ -86,15 +84,12 @@
                 </ul>
             </div>
         </nav>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-8">
-                    <h4 class="mt-4">Bonjour {{ user.first_name }},</h4>
-                </div>
-            </div>
+
+        <div class="content-container container-fluid">
+            {% block content %}
+            {% endblock %}
         </div>
     </div>
-    {% block content %} {% endblock %}
     <!-- /#page-content-wrapper -->
 </div>
 <!-- /#wrapper -->

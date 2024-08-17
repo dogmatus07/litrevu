@@ -2,57 +2,53 @@
 <html>
     <head>
         <title>LITRevu App</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="{% static 'reviews/css/style.css' %}" />
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+        <!-- Bootstrap -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <!-- Favicon -->
         <link rel="icon" href="{% static 'reviews/images/favicon.ico' %}" />
+        <!-- Fontawesome -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        <!-- Google Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        {% if user.is_authenticated %}
-            {% include 'reviews/sidebar.html' %}
-        {% else %}
-            <header class="header">
-                <img src="{% static 'reviews/images/logo.png'%}" alt="Logo officiel LITReview" class="logo">
-                <nav class="navigation">
-                    {% if user.profile_picture %}
-                        <div class="profile-picture-container">
-                            <img src="{{ user.profile_picture.url }}" alt="Profile Picture" class="profile-picture">
-                        </div>
-                    {% else %}
-                        <img src="/media/profile_pictures/default-image.jpg" alt="default profile picture" class="no-profile-picture">
-                    {% endif %}
-                    <div class="profile-greetings">
-                        <span>Bonjour {{ user.first_name|default:user.email }}</span> |
-                    </div>
-                    <div class="logout_container">
-                        <form action="{% url 'logout'%}" method="post">
-                            {% csrf_token %}
-                            <button type="submit" class="logout_button">
-                                Se déconnecter
-                            </button>
-                        </form>
-                    </div>
-                </nav>
-            </header>
-        {% endif %}
+        <div class="d-flex flex-column min-vh-100">
+            {% if user.is_authenticated %}
+                {% include 'reviews/user-admin.html' %}
+            {% else %}
+                <header class="header">
+                    <img src="{% static 'reviews/images/logo.png'%}" alt="Logo officiel LITReview" class="logo">
+                </header>
+            {% endif %}
+            <div class="content-container">
+                {% block content %}
+                {% endblock %}
+            </div>
 
-        <div class="{% if user.authenticated %}content-container {% else %} container {% endif %}">
-            {% block content %} {% endblock %}
+            <footer class="{% if user.authenticated %} d-none {% else %} footer mt-auto {% endif %}">
+                <p>&copy; {% now "Y" %} - LITReview - Tous droits réservés</p>
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </footer>
         </div>
 
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-
-        <footer class="footer">
-            <p>&copy; {% now "Y" %} - LITReview - Tous droits réservés</p>
-        </footer>
+        <!-- Bootstrap JS -->
+        <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+        </script>
     </body>
 </html>
