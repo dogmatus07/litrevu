@@ -12,7 +12,7 @@
             <li class="list-group-item"><a href="#">
                 <i class="fa-sharp fa-solid fa-star mr-1"></i>
                 Mes critiques</a></li>
-            <li class="list-group-item"><a href="#">
+            <li class="list-group-item"><a href="{% url 'list_following' %}">
                 <i class="fa-solid fa-users mr-1"></i>
                 Abonnements</a></li>
             <li class="list-group-item"><a href="{% url 'feed' %}">
@@ -34,7 +34,7 @@
                             Demander une critique <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-success mx-2 add-review-btn" href="#">
+                        <a class="btn btn-success mx-2 add-review-btn" href="{% url 'add_ticket_review' %}">
                             <i class="fa-solid fa-star"></i>
                             Créer une critique</a>
                     </li>

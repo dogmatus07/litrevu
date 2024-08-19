@@ -1,0 +1,15 @@
+<!-- reviews/templates/reviews/add_ticket_review.html -->
+{% extends 'reviews/base.html' %}
+{% block content %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.ticket.as_p }}
+        {{ form.review.as_p }}
+        <button
+                type="submit"
+                class="btn btn-primary mr-2 save-button">
+            <i class="fa fa-save"></i> Soumettre
+        </button>
+    </form>
+{% endblock %}

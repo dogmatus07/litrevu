@@ -85,9 +85,17 @@ class Review(models.Model):
     Includes a rating and text content.
 
     """
+    ratings = [
+        (1, '1 - Très mauvais'),
+        (2, '2 - Mauvais'),
+        (3, '3 - Moyen'),
+        (4, '4 - Bon'),
+        (5, '5 - Excellent')
+    ]
     ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE)
     rating = models.PositiveSmallIntegerField(
-        validators=[MinValueValidator(0), MaxValueValidator(5)])
+        validators=[MinValueValidator(0), MaxValueValidator(5)],\
+        choices=ratings)
     headline = models.CharField(max_length=128)
     body = models.CharField(max_length=8192, blank=True)
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

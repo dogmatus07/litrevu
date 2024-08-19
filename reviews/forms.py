@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import CustomUser, Ticket, Review
+from django.contrib.auth import get_user_model
 
 class CustomUserCreationForm(UserCreationForm):
     """
@@ -54,12 +55,45 @@ class TicketForm(forms.ModelForm):
 
 class ReviewForm(forms.ModelForm):
     """
-    From to create reviews
+    Form to create reviews
     """
     class Meta:
         model = Review
         fields = ['rating', 'headline', 'body']
+
         widgets = {
             'body': forms.Textarea(attrs={'rows': 5}),
-            'rating': forms.RadioSelect(),
+            'rating': forms.Select(),
         }
+
+class TicketReviewForm(forms.ModelForm):
+    """
+    Form to create a ticket and its review combined
+    """
+    class Meta:
+        model = Ticket
+        fields = ['title', 'description', 'image']
+
+class TicketandReviewForm(forms.Form):
+    """
+    Form to add ticket and review for the this ticket
+    """
+    ticket = TicketReviewForm()
+    review = ReviewForm()
+
+User = get_user_model()
+
+class FollowUserForm(forms.Form):
+    """
+    Form to follow a user
+    """
+    username = forms.CharField(max_length=150, label="Nom d'utilisateur à suivre")
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+
+        try:
+            user_to_follow = User.objects.get(email=username)
+        except User.DoesNotExist:
+            raise forms.ValidationError("Cet utilisateur n'existe pas")
+        return user_to_follow

@@ -1,12 +1,28 @@
 <!-- reviews/templates/reviews/add_review.html -->
 {% extends 'reviews/base.html' %}
 {% block content %}
-
-<h2>Publier un avis pour le billet : "{{ ticket.title }}"</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-success">Soumettre</button>
-    </form>
-
+<div id="review-toggle" class=" review-container container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h2>Publier un avis sur : "{{ ticket.title }}"</h2>
+        </div>
+        <div class="col-12">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button
+                        type="submit"
+                        class="btn btn-primary mr-2 save-button">
+                    <i class="fa fa-save"></i> Soumettre
+                </button>
+                <button
+                        type="button"
+                        class="btn btn-danger cancel-button"
+                        onclick="window.location.href='{% url 'dashboard' %}'">
+                    <i class="fa fa-ban"></i> Annuler
+                    </button>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

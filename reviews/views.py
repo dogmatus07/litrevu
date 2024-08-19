@@ -4,10 +4,59 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.views import View
-from .forms import CustomUserCreationForm, CustomUserAuthenticationForm, TicketForm, ReviewForm
+from .forms import CustomUserCreationForm, \
+    CustomUserAuthenticationForm, \
+    TicketForm, \
+    ReviewForm, \
+    TicketReviewForm,TicketandReviewForm, \
+    FollowUserForm
 from .models import Ticket, Review, UserFollows
 from django.contrib import messages
 from django.forms import FileInput
+
+@login_required
+def follow_user(request):
+    """
+    View for following user based on username (email)
+
+    :param request:
+    """
+    if request.method == 'POST':
+        form = FollowUserForm(request.POST)
+        if form.is_valid():
+            user_to_follow = form.cleaned_data['username']
+            if UserFollows.objects.filter(user=request.user, followed_user=user_to_follow).exists():
+                messages.warning(request, f'Vous suivez déjà {user_to_follow.email}')
+            else:
+                UserFollows.objects.create(user=request.user, followed_user=user_to_follow)
+                messages.success(request, f'Vous suivez maintenant {user_to_follow.email}')
+            return redirect('follow_user')
+    else:
+        form = FollowUserForm()
+    return render(request, 'reviews/follow_user.html', {'form': form})
+
+@login_required
+def list_following(request):
+    """
+    View for listing all the users followed by request.user
+    :param request:
+    """
+    following = UserFollows.objects.filter(user=request.user)
+    return render (request, 'reviews/list_following.html', {'following': following})
+
+@login_required
+@require_POST
+def unfollow_user(request, user_id):
+    """
+    View to handle unfollow user actions.
+
+    :param request:
+    :param user_id:
+    """
+    user_to_unfollow = get_object_or_404(UserFollows, user=request.user, followed_user_id=user_id)
+    user_to_unfollow.delete()
+    messages.success(request, f'Vous ne suivez plus cet utilisateur: {user_to_unfollow}')
+    return redirect('list_following')
 
 
 def home(request):
@@ -225,3 +274,21 @@ def add_review(request, ticket_id):
         'ticket': ticket
     }
     return render(request, 'reviews/add_review.html', context)
+
+def add_ticket_review(request):
+    if request.method == 'POST':
+        form = TicketandReviewForm(request.POST, request.FILES)
+        if form.is_valid():
+            ticket = form.cleaned_data['ticket'].save(commit=false)
+            ticke.user = request.user
+            ticket.save()
+
+            review = form.cleaned_data['review'].save(commit=false)
+            review.user = request.user
+            review.save()
+
+            return redirect('dashboard')
+    else:
+        form = TicketandReviewForm()
+
+    return render(request, 'reviews/add_ticket_review.html', {'form': form})

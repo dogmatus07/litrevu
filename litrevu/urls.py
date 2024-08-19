@@ -25,7 +25,9 @@ from reviews.views import RegisterView, \
     list_tickets, \
     dashboard, \
     feed, delete_ticket,\
-    add_review
+    add_review, \
+    add_ticket_review, \
+    follow_user, list_following, unfollow_user
 from django.contrib.auth.views import LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -39,9 +41,13 @@ urlpatterns = [
     path('edit_ticket/<int:ticket_id>/', edit_ticket, name='edit_ticket'),
     path('delete_ticket/<int:ticket_id>/', delete_ticket, name='delete_ticket'),
     path('add_review/<int:ticket_id>/', add_review, name='add_review'),
+    path('add_ticket_review', add_ticket_review, name='add_ticket_review'),
     path('tickets/', list_tickets, name='list_tickets'),
     path('dashboard/', dashboard, name='dashboard'),
     path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
-    path('feed/', feed, name='feed')
+    path('feed/', feed, name='feed'),
+    path('follow/', follow_user, name='follow_user'),
+    path('following/', list_following, name='list_following' ),
+    path('unfollow/<int:user_id>/', unfollow_user, name='unfollow_user')
 
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
