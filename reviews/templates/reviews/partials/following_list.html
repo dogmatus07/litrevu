@@ -1,0 +1,51 @@
+<!-- reviews/templates/reviews/partials/following_list.html -->
+<table class="table table-striped table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Photo</th>
+            <th scope="col">Noms</th>
+            <th scope="col">Prénoms</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for follow in users %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>
+                    {% if follow.followed_user.profile_picture %}
+                        <img
+                                src="{{ follow.followed_user.profile_picture.url }}"
+                                alt="{{ follow.followed_user.first_name }}"
+                                class="profile-picture">
+                    {% else %}
+                        <img
+                            src="/media/profile_pictures/default-image.jpg"
+                            alt="default"
+                            class="no-profile-picture">
+                    {% endif %}
+                </td>
+                <td>{{ follow.followed_user.last_name }}</td>
+                <td>{{ follow.followed_user.first_name }}</td>
+                <td>{{ follow.followed_user.email }}</td>
+                <td>
+                    <form
+                        method="post"
+                        action="{% url 'unfollow_user' follow.followed_user.id %}"
+                        class="following-form d-inline">
+                    {% csrf_token %}
+                    <button
+                        type="submit"
+                        class="btn btn-danger btn-sm">
+                        Ne plus suivre
+                    </button>
+                </form>
+                </td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="6">Pas d'abonnements.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>

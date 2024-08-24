@@ -1,53 +1,86 @@
 <!-- reviews/templates/reviews/list_following.html -->
 {% extends 'reviews/base.html' %}
 {% block content %}
-    <h2>Abonnements</h2>
-    <table class="table table-striped table-hover">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Photo</th>
-                <th scope="col">Noms</th>
-                <th scope="col">Prénoms</th>
-                <th scope="col">E-mail</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for follow in following %}
-                <tr>
-                    <th scope="row">{{ forloop.counter }}</th>
-                    <td>
-                        {% if follow.followed_user.profile_picture %}
-                            <img
-                                    src="{{ follow.followed_user.profile_picture.url }}"
-                                    alt="{{ follow.followed_user.first_name }}"
-                                    class="profile-picture">
-                        {% else %}
-                            <img
-                                src="/media/profile_pictures/default-image.jpg"
-                                alt="default"
-                                class="no-profile-picture">
-                        {% endif %}
-                    </td>
-                    <td>{{ follow.followed_user.first_name }}</td>
-                    <td>{{ follow.followed_user.last_name }}</td>
-                    <td>{{ follow.followed_user.email }}</td>
-                    <td>
-                        <form
-                            method="post"
-                            action="{% url 'unfollow_user' follow.followed_user.id %}"
-                            class="following-form d-inline">
-                        {% csrf_token %}
-                        <button
-                            type="submit"
-                            class="btn btn-danger btn-sm">
-                            Ne plus suivre
-                        </button>
-                    </form>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="container follow-user-form">
+        <!-- Follow user Form -->
+        <div class="row my-4">
+            <h2 class="col-12">Suivre un utilisateur</h2>
+            <div class="col">
+                <form method="post" class="form-inline">
+                    {% csrf_token %}
+                    <div class="form-group mb-2 mr-2">
+                        {{ form.username.label_tag }}
+                        {{ form.username }}
+                    </div>
+                    <button type="submit" class="btn btn-success btn-sm px-4 ml-2 follow-button">Suivre</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- List of followed users -->
+    <div class="container followed-users">
+        <div class="row">
+            <h2 class="col-12 mb-3">Abonnements</h2>
+            {% include 'reviews/partials/following_list.html' with users=following %}
+            <!--<table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Photo</th>
+                        <th scope="col">Noms</th>
+                        <th scope="col">Prénoms</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for follow in following %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>
+                                {% if follow.followed_user.profile_picture %}
+                                    <img
+                                            src="{{ follow.followed_user.profile_picture.url }}"
+                                            alt="{{ follow.followed_user.first_name }}"
+                                            class="profile-picture">
+                                {% else %}
+                                    <img
+                                        src="/media/profile_pictures/default-image.jpg"
+                                        alt="default"
+                                        class="no-profile-picture">
+                                {% endif %}
+                            </td>
+                            <td>{{ follow.followed_user.first_name }}</td>
+                            <td>{{ follow.followed_user.last_name }}</td>
+                            <td>{{ follow.followed_user.email }}</td>
+                            <td>
+                                <form
+                                    method="post"
+                                    action="{% url 'unfollow_user' follow.followed_user.id %}"
+                                    class="following-form d-inline">
+                                {% csrf_token %}
+                                <button
+                                    type="submit"
+                                    class="btn btn-danger btn-sm">
+                                    Ne plus suivre
+                                </button>
+                            </form>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="6">Vous ne suivez personne actuellement.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>-->
+        </div>
+    </div>
+
+    <!-- List of following users -->
+    <div class="container following-users">
+        <div class="row">
+            <h2 class="col-12 mb-3">Abonnés</h2>
+            {% include 'reviews/partials/followers_list.html' with users=followers %}
+        </div>
+    </div>
+
 {% endblock %}

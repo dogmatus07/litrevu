@@ -58,6 +58,12 @@ p {
     flex-wrap: wrap;
 }
 
+/* feed */
+.feed_container, .review-container {
+    margin-left: 20rem;
+}
+
+
 /* User tickets section */
 .card-img {
     width: 100%;
@@ -188,7 +194,8 @@ body {
 .save-button.btn-primary,
 .cancel-button.btn-primary,
 .add-ticket-button.btn-primary,
-.add-review-button.btn-primary {
+.add-review-button.btn-primary,
+.follow-button.btn-primary {
     background: var(--litreview-yellow);
     font-family: var(--copy-font-family);
     padding: calc(var(--base-font-size) * 0.618) calc(var(--base-font-size) * 1);
@@ -249,7 +256,8 @@ body {
 .add-ticket-button.btn btn-primary:hover,
 .add-review-button.btn-primary:hover,
 .add-ticket-btn.btn-primary:hover,
-.add-review-btn.btn-success:hover {
+.add-review-btn.btn-success:hover,
+.follow-button.btn-primary:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 10px rgba(0,0,0,0.4);
 }

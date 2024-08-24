@@ -2,55 +2,7 @@
 {% extends 'reviews/base.html' %}
 
 {% block content %}
-<!--<div class="container">
-    <div class="row">
-        <div class="col mb-3">
-            <h2 class="mb-3">Vos tickets</h2>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">Image</th>
-                        <th scope="col">Titre</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Date de création</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for ticket in tickets %}
-                    <tr>
-                        <td>
-                            <img src="{{ ticket.image.url }}" alt="{{ ticket.title }}" class="img-fluid" style="max-width: 100px;">
-                        </td>
-                        <td>{{ ticket.title }}</td>
-                        <td>{{ ticket.description }}</td>
-                        <td>{{ ticket.time_created }}</td>
-                        <td>
-                            <a href="{% url 'edit_ticket' ticket.id %}" class="btn btn-primary btn-sm">
-                                <i class="fa fa-pencil-alt"></i> Modifier
-                            </a>
-                            <form method="post" action="{% url 'delete_ticket' ticket.id %}" style="display: inline">
-                                {% csrf_token %}
-                                <button
-                                    type="submit"
-                                    class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Etes-vous sûr de vouloir supprimer cet élément ?');">
-                                    <i class="fa fa-trash"></i> Supprimer
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
--->
+
 <div class="container d-flex flex-column">
     <div class="row">
         <div class="col mb-3">

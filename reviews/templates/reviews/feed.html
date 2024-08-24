@@ -4,8 +4,7 @@
 <div class="feed_container">
     <div class="row">
         <div class="col">
-            <h1>Flux</h1>
-            <h2>Billets</h2>
+            <h2 class="my-4">Flux</h2>
             {% for ticket in tickets %}
                 <div class="col-8 m-3 justify-content-center">
                     <div class="card bg-white mb-3 p-3">
@@ -39,7 +38,7 @@
                                             </small>
                                         </div>
                                     {% endfor %}
-                                    {% if ticket.id not in reviewed_tickets %}
+                                    {% if ticket.id not in reviewed_tickets_ids %}
                                         <form action="{% url 'add_review' ticket.id %}" method="post">
                                             {% csrf_token %}
                                             <input
@@ -61,12 +60,14 @@
                                             <textarea
                                                     name="body"
                                                     class="form-control"
-                                                    placeholder="Votre critique" required>
+                                                    placeholder="Votre critique..." required>
                                             </textarea>
                                             <button type="submit" class="btn btn-primary mt-2">
                                                 Ajouter une critique</button>
 
                                         </form>
+                                    {% else %}
+                                        <p>Ce billet a déjà une critique</p>
                                     {% endif %}
                                 </div>
                             </div>

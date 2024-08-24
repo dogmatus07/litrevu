@@ -13,6 +13,7 @@ from .forms import CustomUserCreationForm, \
 from .models import Ticket, Review, UserFollows
 from django.contrib import messages
 from django.forms import FileInput
+from django.db.models import Count
 
 @login_required
 def follow_user(request):
@@ -45,11 +46,39 @@ def follow_user(request):
 @login_required
 def list_following(request):
     """
-    View for listing all the users followed by request.user
+    View for listing all the users followed by request.user (and vice versa), and follow new users
     :param request:
     """
-    following = UserFollows.objects.filter(user=request.user)
-    return render (request, 'reviews/list_following.html', {'following': following})
+    following = UserFollows.objects.filter(user=request.user).prefetch_related('followed_user').annotate(
+        ticket_number=Count('followed_user__ticket')
+    )
+    followers = UserFollows.objects.filter(followed_user=request.user).prefetch_related('user').annotate(
+        ticket_number=Count('user__ticket')
+    )
+
+    form = FollowUserForm()
+    if request.method == 'POST':
+        form = FollowUserForm(request.POST)
+        if form.is_valid():
+            user_to_follow = form.cleaned_data['username']
+            if user_to_follow != request.user and not UserFollows.objects.filter(user=request.user, followed_user=user_to_follow).exists():
+                UserFollows.objects.create(user=request.user, followed_user=user_to_follow)
+                messages.success(
+                    request, f'Vous suivez maintenant '
+                             f'{user_to_follow.first_name} '
+                             f'{user_to_follow.last_initial}.')
+            else:
+                messages.warning(
+                    request, f'Vous suivez déjà '
+                             f'{user_to_follow.first_name} {user_to_follow.last_initial}.'
+                )
+            return redirect('list_following')
+
+    return render (request, 'reviews/list_following.html', {
+        'following': following,
+        'followers': followers,
+        'form': form
+    })
 
 @login_required
 @require_POST
@@ -178,13 +207,13 @@ def feed(request):
     """
     user = request.user
     followed_users = UserFollows.objects.filter(user=user).values_list('followed_user', flat=True)
-    tickets = Ticket.objects.filter(user__in=followed_users).prefetch_related('reviews').order_by('-time_created')
+    tickets = Ticket.objects.filter(user__in=followed_users).prefetch_related('reviews__user').order_by('-time_created')
     ticket_ids = tickets.values_list('id', flat=True)
-    reviewed_tickets = Review.objects.filter(ticket__id__in=ticket_ids, user=user).values_list('ticket_id', flat=True)
+    reviewed_tickets_ids = Review.objects.filter(ticket__in=tickets).values_list('ticket_id', flat=True).distinct()
 
     context = {
         'tickets': tickets,
-        'reviewed_tickets': reviewed_tickets
+        'reviewed_tickets_ids': set(reviewed_tickets_ids)
     }
     return render(request, 'reviews/feed.html', context)
 

@@ -1,8 +1,10 @@
 <!-- reviews/templates/reviews/add_ticket_review.html -->
 {% extends 'reviews/base.html' %}
 {% block content %}
-
-    <form method="post" enctype="multipart/form-data">
+<div class="ticket container mt-1 ml-5">
+    <div class="row d-inline mb-3">
+        <h2 class="mx-2">Ajouter un billet et sa critique</h2>
+        <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.ticket.as_p }}
         {{ form.review.as_p }}
@@ -12,4 +14,7 @@
             <i class="fa fa-save"></i> Soumettre
         </button>
     </form>
+    </div>
+</div>
+
 {% endblock %}
