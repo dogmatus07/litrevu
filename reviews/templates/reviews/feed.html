@@ -23,10 +23,51 @@
                                     <p class="card-text">{{ ticket.description }}</p>
                                     <p class="card-text">
                                         <small class="text-muted">
-                                            Créé le : {{ ticket.time_created }}
+                                            Créé le : {{ ticket.time_created|date:"d F Y, H:i" }}
                                             par {{ ticket.user.first_name }}
-                                            {{ ticket.user.last_name|slice:":1"|capfirst }}.
+                                            {{ ticket.user.last_initial|capfirst }}.
                                         </small></p>
+                                    {% for review in ticket.reviews.all %}
+                                        <div class="review">
+                                            <strong>{{ review.user.first_name }} : </strong>
+                                            <strong>{{ review.rating }}</strong>
+                                            <h4>{{ review.headline }}</h4>
+                                            <p>{{ review.body }}</p>
+                                            <small>
+                                                Créé par {{ review.user.first_name }}
+                                                {{ review.user.last_initial|capfirst }}.
+                                            </small>
+                                        </div>
+                                    {% endfor %}
+                                    {% if ticket.id not in reviewed_tickets %}
+                                        <form action="{% url 'add_review' ticket.id %}" method="post">
+                                            {% csrf_token %}
+                                            <input
+                                                    type="text"
+                                                    name="headline"
+                                                    class="form-control"
+                                                    placeholder="Titre"
+                                                    required>
+                                            <select
+                                                    name="rating"
+                                                    class="form-control my-2">
+                                                <option value="Choisissez une note"></option>
+                                                <option value="1">1 - Très mauvais</option>
+                                                <option value="2">2 - Mauvais</option>
+                                                <option value="3">3 - Moyen</option>
+                                                <option value="4">4 - Bon</option>
+                                                <option value="5">5 - Excellent</option>
+                                            </select>
+                                            <textarea
+                                                    name="body"
+                                                    class="form-control"
+                                                    placeholder="Votre critique" required>
+                                            </textarea>
+                                            <button type="submit" class="btn btn-primary mt-2">
+                                                Ajouter une critique</button>
+
+                                        </form>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

@@ -68,6 +68,15 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         """
         return self.email
 
+
+    @property
+    def last_initial(self):
+        """
+
+        :return: First letter of the last name of a user to preserve privacy
+        """
+        return self.last_name[0] if self.last_name else ''
+
 class Ticket(models.Model):
     """
     Model that represents a ticket.
@@ -92,7 +101,7 @@ class Review(models.Model):
         (4, '4 - Bon'),
         (5, '5 - Excellent')
     ]
-    ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE)
+    ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE, related_name='reviews')
     rating = models.PositiveSmallIntegerField(
         validators=[MinValueValidator(0), MaxValueValidator(5)],\
         choices=ratings)

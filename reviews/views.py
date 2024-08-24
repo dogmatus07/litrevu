@@ -24,12 +24,19 @@ def follow_user(request):
     if request.method == 'POST':
         form = FollowUserForm(request.POST)
         if form.is_valid():
-            user_to_follow = form.cleaned_data['username']
-            if UserFollows.objects.filter(user=request.user, followed_user=user_to_follow).exists():
-                messages.warning(request, f'Vous suivez déjà {user_to_follow.email}')
-            else:
-                UserFollows.objects.create(user=request.user, followed_user=user_to_follow)
-                messages.success(request, f'Vous suivez maintenant {user_to_follow.email}')
+            try:
+                user_to_follow = form.cleaned_data['username']
+                if user_to_follow == request.user:
+                    messages.warning(request, 'Vous ne pouvez pas vous suivre vous-même')
+                elif UserFollows.objects.filter(user=request.user, followed_user=user_to_follow).exists():
+                    messages.warning(request, f'Vous suivez déjà '
+                                              f'{user_to_follow.first_name} {user_to_follow.last_initial}.')
+                else:
+                    UserFollows.objects.create(user=request.user, followed_user=user_to_follow)
+                    messages.success(request, f'Vous suivez maintenant '
+                                              f'{user_to_follow.first_name} {user_to_follow.last_initial}.')
+            except CustomUser.DoesNotExist:
+                    messages.warning(request, "Cet utilisateur n'existe pas")
             return redirect('follow_user')
     else:
         form = FollowUserForm()
@@ -171,12 +178,13 @@ def feed(request):
     """
     user = request.user
     followed_users = UserFollows.objects.filter(user=user).values_list('followed_user', flat=True)
-    tickets = Ticket.objects.filter(user__in=followed_users).order_by('-time_created')
-    reviews = Review.objects.filter(ticket__user__in=followed_users).order_by('-time_created')
+    tickets = Ticket.objects.filter(user__in=followed_users).prefetch_related('reviews').order_by('-time_created')
+    ticket_ids = tickets.values_list('id', flat=True)
+    reviewed_tickets = Review.objects.filter(ticket__id__in=ticket_ids, user=user).values_list('ticket_id', flat=True)
 
     context = {
         'tickets': tickets,
-        'reviews': reviews
+        'reviewed_tickets': reviewed_tickets
     }
     return render(request, 'reviews/feed.html', context)
 
@@ -258,7 +266,7 @@ def add_review(request, ticket_id):
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         if form.is_valid():
-            review = form.save(commit=false)
+            review = form.save(commit=False)
             review.ticket = ticket
             review.user = request.user
             review.save()
@@ -279,11 +287,11 @@ def add_ticket_review(request):
     if request.method == 'POST':
         form = TicketandReviewForm(request.POST, request.FILES)
         if form.is_valid():
-            ticket = form.cleaned_data['ticket'].save(commit=false)
+            ticket = form.cleaned_data['ticket'].save(commit=False)
             ticke.user = request.user
             ticket.save()
 
-            review = form.cleaned_data['review'].save(commit=false)
+            review = form.cleaned_data['review'].save(commit=False)
             review.user = request.user
             review.save()
 
