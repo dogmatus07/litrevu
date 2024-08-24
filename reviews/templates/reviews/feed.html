@@ -27,7 +27,7 @@
                                             {{ ticket.user.last_initial|capfirst }}.
                                         </small></p>
                                     {% for review in ticket.reviews.all %}
-                                        <div class="review">
+                                        <div class="single-review">
                                             <strong>{{ review.user.first_name }} : </strong>
                                             <strong>{{ review.rating }}</strong>
                                             <h4>{{ review.headline }}</h4>
@@ -49,8 +49,9 @@
                                                     required>
                                             <select
                                                     name="rating"
-                                                    class="form-control my-2">
-                                                <option value="Choisissez une note"></option>
+                                                    class="form-control my-2"
+                                                    required>
+                                                <option value="" disabled selected>Choisissez une note</option>
                                                 <option value="1">1 - Très mauvais</option>
                                                 <option value="2">2 - Mauvais</option>
                                                 <option value="3">3 - Moyen</option>
@@ -60,11 +61,9 @@
                                             <textarea
                                                     name="body"
                                                     class="form-control"
-                                                    placeholder="Votre critique..." required>
-                                            </textarea>
+                                                    placeholder="Votre critique..." required></textarea>
                                             <button type="submit" class="btn btn-primary mt-2">
                                                 Ajouter une critique</button>
-
                                         </form>
                                     {% else %}
                                         <p>Ce billet a déjà une critique</p>

@@ -98,7 +98,7 @@ def unfollow_user(request, user_id):
 def home(request):
     """
     Homepage view that displays login form and registration invite.
-    If user is authenticated, redirect to dashboard
+    If user is authenticated, redirect to feed
 
     Args:
         request: HttpRequest object
@@ -107,7 +107,7 @@ def home(request):
         HttpResponse object with the homepage template rendered includes context data
     """
     if request.user.is_authenticated:
-        return redirect('dashboard')
+        return redirect('feed')
 
     login_form = CustomUserAuthenticationForm()
     register_form = CustomUserCreationForm()
@@ -142,7 +142,7 @@ class RegisterView(View):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('dashboard')
+            return redirect('feed')
         return render(request, 'reviews/register.html', {'form':form})
 
 class LoginView(View):
@@ -167,7 +167,7 @@ class LoginView(View):
             if user:
                 login(request, user)
                 messages.success(request, 'Vous êtes bien connecté')
-                return redirect('dashboard')
+                return redirect('feed')
             else:
                 messages.error(request, 'Echec de la connexion, identifiant à vérifier')
         else:
@@ -238,7 +238,7 @@ def add_ticket(request):
             ticket = form.save(commit=False)
             ticket.user = request.user # assign the ticket to the current user
             ticket.save()
-            return redirect('dashboard') # redirect to dashboard
+            return redirect('feed') # redirect to feed
         else:
             print(form.errors)
     else:
@@ -257,7 +257,7 @@ def edit_ticket(request, ticket_id):
         if form.is_valid():
             form.save()
             messages.success(request, 'Le billet a été modifié avec succès')
-            return redirect('dashboard')
+            return redirect('feed')
         else:
             messages.error(request, 'Des erreurs sont présentes dans le formulaire')
     else:
@@ -278,10 +278,10 @@ def delete_ticket(request, ticket_id):
     if request.method == 'POST':
         ticket.delete()
         messages.success(request, 'Billet supprimé avec succès')
-        return redirect('dashboard')
+        return redirect('feed')
     else:
         messages.error(request, 'Erreur lors de la suppression')
-        return redirect('dashboard')
+        return redirect('feed')
 
 @login_required
 def add_review(request, ticket_id):
@@ -300,7 +300,7 @@ def add_review(request, ticket_id):
             review.user = request.user
             review.save()
             messages.success(request, 'Votre avis a été publié avec succès')
-            return redirect('dashboard')
+            return redirect('feed')
         else:
             messages.error(request, 'Des erreurs sont présentes dans ce formulaire')
     else:
@@ -324,7 +324,7 @@ def add_ticket_review(request):
             review.user = request.user
             review.save()
 
-            return redirect('dashboard')
+            return redirect('feed')
     else:
         form = TicketandReviewForm()
 

@@ -1,24 +1,41 @@
 <!-- reviews/templates/reviews/add_review.html -->
 {% extends 'reviews/base.html' %}
 {% block content %}
-<div id="review-toggle" class="review-container container-fluid">
-    <div class="row">
+<div id="review-toggle" class="ticket container mt-1">
+    <div class="row d-inline mb-3">
         <div class="col-12">
-            <h2>Publier un avis sur : "{{ ticket.title }}"</h2>
+            <h3>Publier un avis sur : "{{ ticket.title }}"</h3>
         </div>
         <div class="col-12">
             <form method="post">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <button
-                        type="submit"
-                        class="btn btn-primary mr-2 save-button">
-                    <i class="fa fa-save"></i> Soumettre
-                </button>
+                <input
+                        type="text"
+                        name="headline"
+                        class="form-control"
+                        placeholder="Titre"
+                        required>
+                <select
+                        name="rating"
+                        class="form-control my-2"
+                        required>
+                    <option value="" disabled selected>Choisissez une note</option>
+                    <option value="1">1 - Très mauvais</option>
+                    <option value="2">2 - Mauvais</option>
+                    <option value="3">3 - Moyen</option>
+                    <option value="4">4 - Bon</option>
+                    <option value="5">5 - Excellent</option>
+                </select>
+                <textarea
+                        name="body"
+                        class="form-control"
+                        placeholder="Votre critique..." required></textarea>
+                <button type="submit" class="btn btn-primary mt-2">
+                    Ajouter une critique</button>
                 <button
                         type="button"
                         class="btn btn-danger cancel-button"
-                        onclick="window.location.href='{% url 'dashboard' %}'">
+                        onclick="window.location.href='{% url 'list_tickets' %}'">
                     <i class="fa fa-ban"></i> Annuler
                     </button>
             </form>
