@@ -36,11 +36,23 @@
             <footer class="{% if user.authenticated %} d-none {% else %} footer mt-auto {% endif %}">
                 <p>&copy; {% now "Y" %} - LITReview - Tous droits réservés</p>
                 {% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
-                    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                    {% endfor %}
-                </ul>
+                    <div
+                            id="message-container"
+                            class="position-fixed bottom-0 end-0 p-3"
+                            style="z-index: 11; right: 20px; bottom: 20px;">
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button
+                                        type="button"
+                                        class="close"
+                                        data-dismiss="alert"
+                                        aria-label="close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    </div>
                 {% endif %}
             </footer>
         </div>

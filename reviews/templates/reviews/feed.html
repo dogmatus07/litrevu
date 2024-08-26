@@ -6,10 +6,10 @@
         <div class="col">
             <h2 class="my-4">Flux</h2>
             {% for ticket in tickets %}
-                <div class="col-8 m-3 justify-content-center">
+                <div class="col-8 mx-auto">
                     <div class="card bg-white mb-3 p-3">
-                        <div class="row no-gutters">
-                            <div class="col-md-4 justify-content-center">
+                        <div class="row g-0">
+                            <div class="col-md-4 d-flex justify-content-center">
                                 <img
                                     src="{{ ticket.image.url }}"
                                     alt="{{ ticket.title }}"
@@ -96,15 +96,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
-            <h2>Critiques</h2>
-            {% for review in reviews %}
-                <div>
-                    <h3>{{ review.headline }}</h3>
-                    <span>{{ review.rating }}</span>
-                    <p>{{ review.body }}</p>
-                    <small>Créé par {{ review.user.email }} le {{ review.time_created }}</small>
                 </div>
             {% endfor %}
         </div>

@@ -52,6 +52,9 @@ class TicketForm(forms.ModelForm):
         """
         model = Ticket
         fields = ['title', 'description', 'image']
+        widgets = {
+            'image': forms.FileInput(attrs={'required': True}),
+        }
 
 class ReviewForm(forms.ModelForm):
     """

@@ -227,6 +227,16 @@ def list_tickets(request):
     return render(request, 'reviews/list_tickets.html', {'tickets': tickets})
 
 @login_required
+def list_reviews(request):
+    """
+    View to list the reviews created by the logged-in user
+    :param request:
+    :return: reviews/list_reviews.html
+    """
+    reviews = Review.objects.filter(user=request.user)
+    return render(request, 'reviews/list_reviews.html', {'reviews': reviews})
+
+@login_required
 def add_ticket(request):
     """
     View to add a new ticket.
