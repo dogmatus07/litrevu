@@ -39,32 +39,56 @@
                                         </div>
                                     {% endfor %}
                                     {% if ticket.id not in reviewed_tickets_ids %}
-                                        <form action="{% url 'add_review' ticket.id %}" method="post">
-                                            {% csrf_token %}
-                                            <input
-                                                    type="text"
-                                                    name="headline"
-                                                    class="form-control"
-                                                    placeholder="Titre"
-                                                    required>
-                                            <select
-                                                    name="rating"
-                                                    class="form-control my-2"
-                                                    required>
-                                                <option value="" disabled selected>Choisissez une note</option>
-                                                <option value="1">1 - Très mauvais</option>
-                                                <option value="2">2 - Mauvais</option>
-                                                <option value="3">3 - Moyen</option>
-                                                <option value="4">4 - Bon</option>
-                                                <option value="5">5 - Excellent</option>
-                                            </select>
-                                            <textarea
-                                                    name="body"
-                                                    class="form-control"
-                                                    placeholder="Votre critique..." required></textarea>
-                                            <button type="submit" class="btn btn-primary mt-2">
-                                                Ajouter une critique</button>
-                                        </form>
+                                        <div class="accordion" id="ReviewAccordion{{ ticket.id }}">
+                                            <div class="accordion-item">
+                                                <h4 class="accordion-header" id="heading{{ ticket.id }}">
+                                                    <button
+                                                            class="accordion-button collapsed btn btn-primary btn-sm"
+                                                            type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#collapse{{ ticket.id }}"
+                                                            aria-expanded="false"
+                                                            aria-controls="collapse{{ ticket.id }}">
+                                                    Ajouter une critique
+                                                    </button>
+                                                </h4>
+                                                <div
+                                                        id="collapse{{ ticket.id }}"
+                                                        class="accordion-collapse collapse"
+                                                        aria-labelledby="heading{{ ticket.id }}"
+                                                        data-bs-parent="#ReviewAccordion{{ ticket.id }}">
+                                                    <div class="accordion-body">
+                                                        <form action="{% url 'add_review' ticket.id %}" method="post">
+                                                            {% csrf_token %}
+                                                            <input
+                                                                    type="text"
+                                                                    name="headline"
+                                                                    class="form-control"
+                                                                    placeholder="Titre"
+                                                                    required>
+                                                            <select
+                                                                    name="rating"
+                                                                    class="form-control my-2"
+                                                                    required>
+                                                                <option value="" disabled selected>
+                                                                    Choisissez une note</option>
+                                                                <option value="1">1 - Très mauvais</option>
+                                                                <option value="2">2 - Mauvais</option>
+                                                                <option value="3">3 - Moyen</option>
+                                                                <option value="4">4 - Bon</option>
+                                                                <option value="5">5 - Excellent</option>
+                                                            </select>
+                                                            <textarea
+                                                                    name="body"
+                                                                    class="form-control"
+                                                                    placeholder="Votre critique..." required></textarea>
+                                                            <button type="submit" class="btn btn-primary mt-2">
+                                                                Ajouter une critique</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     {% else %}
                                         <p>Ce billet a déjà une critique</p>
                                     {% endif %}
