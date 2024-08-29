@@ -90,8 +90,11 @@ def unfollow_user(request, user_id):
     :param user_id:
     """
     user_to_unfollow = get_object_or_404(UserFollows, user=request.user, followed_user_id=user_id)
+    unfollowed_fname = user_to_unfollow.followed_user.first_name
+    unfollowed_lname = user_to_unfollow.followed_user.last_initial
     user_to_unfollow.delete()
-    messages.success(request, f'Vous ne suivez plus cet utilisateur: {user_to_unfollow}')
+    messages.success(request,
+                     f'Vous ne suivez plus cet utilisateur: {unfollowed_fname} {unfollowed_lname}.')
     return redirect('list_following')
 
 
