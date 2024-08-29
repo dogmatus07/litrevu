@@ -1,75 +1,78 @@
-
 # LitReview
 
 ## Description
 
-LitReview est une application qui permet de: 
-
-- Créer des demandes de critiques sur des oeuvres littéraires  
-ou des articles
-- Créer des critiques en répondant à ces articles
-- Créer un billet et une critique en une fois
-- Suivre un utilisateur spécifique
-- Ne plus suivre un utilisateur
-- Avoir un aperçu des abonnements : utilisateurs suivis, abonnés
-- Avoir un espace pour voir les activités de l'utilisateur  
-et des membres qu'il suit
+LitReview est une application web qui permet aux utilisateurs de :
+- Créer des demandes de critiques sur des oeuvres littéraires ou des articles.
+- Répondre à ces demandes par des critiques.
+- Suivre l'activité littéraire d'autres utilisateurs.
+- Gérer les abonnements aux profils des autres utilisateurs.
 
 ## Terminologie
 
-- Billets : Demande de critiques sur des articles  
-ou oeuvres littéraires
-- Critiques : avis sur un billet
-- User : utilisateur
-- Flux : Feed d'activités
+- **Billets** : Demandes de critiques sur des articles ou oeuvres littéraires.
+- **Critiques** : Avis et évaluations détaillées sur les billets.
+- **User** : Utilisateur de l'application.
+- **Flux** : Flux d'activités montrant les dernières actions des utilisateurs suivis.
 
 ## Prérequis
 
-Les dépendances requises pour installer et configurer cette application sont dans le fichier requirements.txt.  
-Cette application nécessite Python 3.8 ou version ultérieure.  
-Vous pouvez télécharger Python depuis le site officiel.
+Assurez-vous que votre système dispose de Python 3.8 ou ultérieur pour exécuter cette application. Vous pouvez télécharger Python depuis le [site officiel](https://www.python.org/downloads/).
 
 ### Dépendances
 
-- Django==5.0.6 : framework requis pour construire l'application
-- Pillow==10.3.0 : bibliothèque pour gérer les téléchargements d'images
-- sqlparse==0.5.0 : analyseur SQL pour Python
-- tzdata==2024.1 : Base de données de fuseaux horaires pour Python
-- asgiref==3.8.1 : utilie pour la fonction asynchrone de Django
+Les dépendances requises sont listées dans le fichier `requirements.txt`. Installez-les en utilisant la commande suivante après avoir activé votre environnement virtuel :
+
+```
+pip install -r requirements.txt
+```
 
 ## Configuration initiale
 
 ### Cloner le dépôt Git
 Vous devez cloner le dépôt Git avec la commande suivante :
 
+```
 git clone https://github.com/dogmatus07/litrevu.git
+```
 
 ### Installation des dépendances
 
 Afin d'installer les dépendances, vous devez d'abord activer votre environnement virtuel.
 
-#### Windows
+#### Sous Windows
 
+```
 python -m venv venv  
 venv\Scripts\activate  
 pip install -r requirements.txt
+```
 
-#### Mac & Linux
+#### Sous Mac & Linux
 
+```
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
+```
 
 ## Lancement de l'application
 
-Pour lancer l'application, accédez au dossier du projet où il y a le fichier manage.py : 
+Pour lancer l'application, accédez au dossier du projet contenant le fichier manage.py et exécutez la commande suivante : 
 
-cd litrevu
+```
+py manage.py runserver
+```
 
 ### Configuration de la base de données
 
-Un fichier db.sqlite3 est déjà inclus dans le projet et contient déjà toutes les tables  
-et les données nécessaires pour un démarrage rapide.
+Un fichier `db.sqlite3` est déjà inclus dans le projet avec des données de démonstration.  
+
+Si vous souhaite réinitialiser la base de données, exécutez la commande suivante : 
+
+```
+py manage.py migrate
+```
 
 ### Informations de connexion
 
@@ -125,13 +128,7 @@ Une fois le serveur lancé, vous pouvez utiliser ces identifiants pour tester l'
     </tbody>
 </table>
 
-### Démarrage du serveur de développement
-
-Cette commande doit être exécutée depuis le dossier où se trouve le fichier manage.py.
-
-python manage.py runserver
-
-### Informations complémentaires
+### Utilisation
 
 La page Home affiche une page d'inscription et de connexion.  
 Vous pouvez créer autant d'utilisateurs que vous le souhaitez.  
