@@ -119,9 +119,15 @@ body {
 }
 
 .star-rating {
-    font-size: 20px;
+    display: inline;
+    font-size: var(--copy-size);
     unicode-bidi: bidi-override;
-    direction: rtl; /* Right to left */
+    color: #FFC107;
+    direction: ltr; /* Right to left */
+}
+
+.single-review {
+    border-radius: var(--base-font-size);
 }
 
 #sidebar-wrapper .sidebar-heading {

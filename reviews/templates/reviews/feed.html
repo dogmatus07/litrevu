@@ -1,5 +1,6 @@
 <!-- reviews/templates/reviews/feed.html -->
 {% extends 'reviews/base.html' %}
+{% load range_filter %}
 {% block content %}
 <div class="feed_container">
     <div class="row">
@@ -27,13 +28,19 @@
                                             {{ ticket.user.last_initial|capfirst }}.
                                         </small></p>
                                     {% for review in ticket.reviews.all %}
-                                        <div class="single-review">
-                                            <strong>{{ review.user.first_name }} : </strong>
-                                            <span>
-
-                                                {{ review.rating }}</span>
-                                            <h4>{{ review.headline }}</h4>
-                                            <p>{{ review.body }}</p>
+                                        <div class="single-review p-2 border border-dark bg-light shadow">
+                                            <strong>{{ review.user.first_name }} a noté : </strong>
+                                            <div class="star-rating">
+                                                {% for i in 1|range:6 %}
+                                                    {% if i <= review.rating %}
+                                                        <i class="fas fa-star"></i>
+                                                    {% else %}
+                                                        <i class="far fa-star"></i>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                            <h4 class="my-2">{{ review.headline }}</h4>
+                                            <p class="my-2">{{ review.body }}</p>
                                             <small>
                                                 Créé par {{ review.user.first_name }}
                                                 {{ review.user.last_initial|capfirst }}.
@@ -92,7 +99,7 @@
                                             </div>
                                         </div>
                                     {% else %}
-                                        <p>Ce billet a déjà une critique</p>
+                                        <p class="my-3"><small>Ce billet a déjà une critique</small></p>
                                     {% endif %}
                                 </div>
                             </div>
