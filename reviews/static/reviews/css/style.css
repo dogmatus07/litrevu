@@ -118,6 +118,12 @@ body {
     background: white;
 }
 
+.star-rating {
+    font-size: 20px;
+    unicode-bidi: bidi-override;
+    direction: rtl; /* Right to left */
+}
+
 #sidebar-wrapper .sidebar-heading {
     padding: 1rem 1.5rem;
     font-size: 1.2rem;

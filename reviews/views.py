@@ -13,7 +13,7 @@ from .forms import CustomUserCreationForm, \
 from .models import Ticket, Review, UserFollows
 from django.contrib import messages
 from django.forms import FileInput
-from django.db.models import Count
+from django.db.models import Count, Q
 
 @login_required
 def follow_user(request):
@@ -210,7 +210,8 @@ def feed(request):
     """
     user = request.user
     followed_users = UserFollows.objects.filter(user=user).values_list('followed_user', flat=True)
-    tickets = Ticket.objects.filter(user__in=followed_users).prefetch_related('reviews__user').order_by('-time_created')
+    tickets = Ticket.objects.filter(
+        Q(user__in=followed_users) | Q(user=user)).prefetch_related('reviews__user').order_by('-time_created')
     ticket_ids = tickets.values_list('id', flat=True)
     reviewed_tickets_ids = Review.objects.filter(ticket__in=tickets).values_list('ticket_id', flat=True).distinct()
 

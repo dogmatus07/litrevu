@@ -95,11 +95,11 @@ class Review(models.Model):
 
     """
     ratings = [
-        (1, '1 - Très mauvais'),
-        (2, '2 - Mauvais'),
-        (3, '3 - Moyen'),
-        (4, '4 - Bon'),
-        (5, '5 - Excellent')
+        (1, '★☆☆☆☆'),
+        (2, '★★☆☆☆'),
+        (3, '★★★☆☆'),
+        (4, '★★★★☆'),
+        (5, '★★★★★')
     ]
     ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE, related_name='reviews')
     rating = models.PositiveSmallIntegerField(

@@ -29,7 +29,9 @@
                                     {% for review in ticket.reviews.all %}
                                         <div class="single-review">
                                             <strong>{{ review.user.first_name }} : </strong>
-                                            <strong>{{ review.rating }}</strong>
+                                            <span>
+
+                                                {{ review.rating }}</span>
                                             <h4>{{ review.headline }}</h4>
                                             <p>{{ review.body }}</p>
                                             <small>
