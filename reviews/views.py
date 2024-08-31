@@ -16,34 +16,6 @@ from django.forms import FileInput
 from django.db.models import Count, Q
 
 @login_required
-def follow_user(request):
-    """
-    View for following user based on username (email)
-
-    :param request:
-    """
-    if request.method == 'POST':
-        form = FollowUserForm(request.POST)
-        if form.is_valid():
-            try:
-                user_to_follow = form.cleaned_data['username']
-                if user_to_follow == request.user:
-                    messages.warning(request, 'Vous ne pouvez pas vous suivre vous-même')
-                elif UserFollows.objects.filter(user=request.user, followed_user=user_to_follow).exists():
-                    messages.warning(request, f'Vous suivez déjà '
-                                              f'{user_to_follow.first_name} {user_to_follow.last_initial}.')
-                else:
-                    UserFollows.objects.create(user=request.user, followed_user=user_to_follow)
-                    messages.success(request, f'Vous suivez maintenant '
-                                              f'{user_to_follow.first_name} {user_to_follow.last_initial}.')
-            except CustomUser.DoesNotExist:
-                    messages.warning(request, "Cet utilisateur n'existe pas")
-            return redirect('follow_user')
-    else:
-        form = FollowUserForm()
-    return render(request, 'reviews/follow_user.html', {'form': form})
-
-@login_required
 def list_following(request):
     """
     View for listing all the users followed by request.user (and vice versa), and follow new users
@@ -61,18 +33,18 @@ def list_following(request):
         form = FollowUserForm(request.POST)
         if form.is_valid():
             user_to_follow = form.cleaned_data['username']
-            if user_to_follow != request.user and not UserFollows.objects.filter(user=request.user, followed_user=user_to_follow).exists():
-                UserFollows.objects.create(user=request.user, followed_user=user_to_follow)
-                messages.success(
-                    request, f'Vous suivez maintenant '
-                             f'{user_to_follow.first_name} '
-                             f'{user_to_follow.last_initial}.')
+            if user_to_follow == request.user:
+                messages.warning(request, 'Vous ne pouvez pas vous suivre vous-même')
+            elif UserFollows.objects.filter(user=request.user, followed_user=user_to_follow).exists():
+                messages.warning(request, f'Vous suivez déjà cet utilisateur : '
+                                          f'{user_to_follow.first_name} {user_to_follow.last_initial}.')
             else:
-                messages.warning(
-                    request, f'Vous suivez déjà '
-                             f'{user_to_follow.first_name} {user_to_follow.last_initial}.'
-                )
-            return redirect('list_following')
+                UserFollows.objects.create(user=request.user, followed_user=user_to_follow)
+                messages.success(request, f'Vous suivez maintenant '
+                                          f'{user_to_follow.first_name} {user_to_follow.last_initial}.')
+        else :
+            messages.warning(request, "Cet utilisateur n'existe pas")
+        return redirect('list_following')
 
     return render (request, 'reviews/list_following.html', {
         'following': following,
