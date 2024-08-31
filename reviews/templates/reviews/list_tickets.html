@@ -1,6 +1,6 @@
 <!-- reviews/templates/reviews/list_tickets.html -->
 {% extends 'reviews/base.html' %}
-
+{% load range_filter %}
 {% block content %}
 
 <div class="container d-flex flex-column">
@@ -46,9 +46,17 @@
                                     Créer une critique</a>
                             {% else %}
                                 {% for review in ticket.reviews.all %}
-                                    <div class="single-review">
+                                    <div class="single-review my-4 p-2 border border-dark bg-light shadow">
                                         <strong>{{ review.user.first_name }} : </strong>
-                                        <strong>{{ review.rating }}</strong>
+                                        <div class="star-rating">
+                                            {% for i in 1|range:6 %}
+                                                {% if i <= review.rating %}
+                                                    <i class="fas fa-star"></i>
+                                                {% else %}
+                                                    <i class="far fa-star"></i>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
                                         <h4>{{ review.headline }}</h4>
                                         <p>{{ review.body }}</p>
                                         <small>
