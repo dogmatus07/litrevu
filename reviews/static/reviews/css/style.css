@@ -61,6 +61,7 @@ p {
 /* feed */
 .feed_container, .review-container {
     margin-left: 20rem;
+    overflow: hidden;
 }
 
 

@@ -7,7 +7,7 @@
         <form method="post" action="{% url 'add_ticket' %}" enctype="multipart/form-data" class="add_ticket_form">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="signup_button">Ajouter</button>
+            <button type="submit" class="signup_button" aria-label="Ajouter">Ajouter</button>
         </form>
     </div>
 </div>

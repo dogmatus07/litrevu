@@ -81,8 +81,24 @@ class TicketandReviewForm(forms.Form):
     """
     Form to add ticket and review for the this ticket
     """
-    ticket = TicketReviewForm()
-    review = ReviewForm()
+    # ticket = TicketReviewForm()
+    # review = ReviewForm()
+    def __init__(self, *args, **kwargs):
+        super(TicketandReviewForm, self).__init__(*args, **kwargs)
+        self.ticket_form = TicketForm(*args, **kwargs, prefix='ticket')
+        self.review_form = ReviewForm(*args, **kwargs, prefix='review')
+
+    def is_valid(self):
+        return self.ticket_form.is_valid() and self.review_form.is_valid()
+
+    def save(self, commit=True):
+        ticket = self.ticket_form.save(commit=False)
+        review = self.review_form.save(commit=False)
+        if commit:
+            ticket.save()
+            review.ticket = ticket
+            review.save()
+        return ticket, review
 
 User = get_user_model()
 

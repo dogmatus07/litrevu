@@ -30,12 +30,13 @@
                         name="body"
                         class="form-control"
                         placeholder="Votre critique..." required></textarea>
-                <button type="submit" class="btn btn-primary mt-2">
+                <button type="submit" class="btn btn-primary mt-2" aria-label="Ajouter une critique">
                     Ajouter une critique</button>
                 <button
                         type="button"
                         class="btn btn-danger cancel-button"
-                        onclick="window.location.href='{% url 'list_tickets' %}'">
+                        onclick="window.location.href='{% url 'list_tickets' %}'"
+                        aria-label="Annuler">
                     <i class="fa fa-ban"></i> Annuler
                     </button>
             </form>

@@ -3,18 +3,60 @@
 {% block content %}
 <div class="ticket container mt-1 ml-5">
     <div class="row d-inline mb-3">
-        <h2 class="mx-2">Ajouter un billet et sa critique</h2>
-        <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.ticket.as_p }}
-        {{ form.review.as_p }}
-        <button
-                type="submit"
-                class="btn btn-primary mr-2 save-button">
-            <i class="fa fa-save"></i> Soumettre
-        </button>
-    </form>
+        <h2>Ajouter un billet et sa critique</h2>
+        <form method="post" enctype="multipart/form-data" class="form-horizontal">
+            {% csrf_token %}
+            <!--{{ ticket_form.as_p }}-->
+            <!--{{ review_form.as_p }}-->
+            <!-- Ticket Creation -->
+            <div class="form-group">
+                <label for="title">Titre du billet</label>
+                {{ ticket_form.title }}
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                {{ ticket_form.description }}
+            </div>
+            <div class="form-group">
+                <label for="image">Image :</label>
+                {{ ticket_form.image }}
+            </div>
+            <!-- Review creation -->
+            <div class="form-group">
+                <label for="rating">Note :</label>
+                {{ review_form.rating }}
+                <!--
+                <select name="rating" class="form-control" required>
+                    <option value="" disabled selected>Choisissez une note</option>
+                    <option value="1">1 - Très mauvais</option>
+                    <option value="2">2 - Mauvais</option>
+                    <option value="3">3 - Moyen</option>
+                    <option value="4">4 - Bon</option>
+                    <option value="5">5 - Excellent</option>
+                </select>-->
+            </div>
+            <div class="form-group">
+                <label for="headline">Titre de la critique :</label>
+                {{ review_form.headline }}
+                <!--
+                <input
+                        type="text"
+                        name="headline"
+                        class="form-control"
+                        placeholder="Entrez le titre de votre critique" required>-->
+            </div>
+            <div class="form-group">
+                <label for="body">Votre critique</label>
+                {{ review_form.body }}
+            </div>
+
+            <button
+                    type="submit"
+                    class="btn btn-primary mr-2 save-button"
+                    aria-label="Soumettre">
+                <i class="fa fa-save"></i> Soumettre
+            </button>
+        </form>
     </div>
 </div>
-
 {% endblock %}

@@ -6,7 +6,13 @@
         <div class="col register_section">
             <h2>Inscrivez-vous</h2>
             {% include 'reviews/register_form.html' %}
-            <button type="button"onclick="location.href='{% url 'home'%}'" class="return_button">Retourner</button>
+            <button
+                    type="button"
+                    onclick="location.href='{% url 'home'%}'"
+                    class="return_button"
+                    aria-label="Retourner">
+                Retourner
+            </button>
         </div>
     </div>
 </div>

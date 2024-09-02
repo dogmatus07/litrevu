@@ -3,16 +3,24 @@
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
         <div class="sidebar-heading">
-            <img src="{% static 'reviews/images/logo.png'%}" alt="Logo officiel LITReview" class="logo">
+            <img
+                    src="{% static 'reviews/images/logo.png'%}"
+                    alt="Logo officiel LITReview"
+                    class="logo"
+                    aria-describedby="logoDesc">
+        </div>
+        <div id="logoDesc" class="sr-only">
+        Ceci est le logo officiel de LitReview.
         </div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item"><a href="{% url 'list_tickets' %}">
+            <li class="list-group-item"><a href="{% url 'list_tickets' %}" aria-label="Billets de l'utilisateur">
                 <i class="fa-solid fa-ticket mr-1"></i>
                 Mes billets</a></li>
-            <li class="list-group-item"><a href="{% url 'list_reviews' %}">
+            <li class="list-group-item"><a href="{% url 'list_reviews' %}" aria-label="Critiques de l'utilisateur">
                 <i class="fa-sharp fa-solid fa-star mr-1"></i>
                 Mes critiques</a></li>
-            <li class="list-group-item"><a href="{% url 'list_following' %}">
+            <li class="list-group-item">
+                <a href="{% url 'list_following' %}" aria-label="Utilisateurs suivis et abonnés">
                 <i class="fa-solid fa-users mr-1"></i>
                 Abonnements</a></li>
             <li class="list-group-item"><a href="{% url 'feed' %}">
@@ -25,7 +33,7 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom sticky-top">
-            <button class="btn mt-1" id="menu-toggle"><i class="fa-solid fa-bars"></i></button>
+            <button class="btn mt-1" id="menu-toggle" aria-label="Toggle Menu"><i class="fa-solid fa-bars"></i></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0 d-flex align-items-center">
                     <li class="nav-item active">
@@ -57,7 +65,7 @@
                                     class="no-profile-picture mr1">
                             {% endif %}
                             <div class="profile-greetings">
-                                <span>
+                                <span style="color: #6f7070;">
                                     {{ user.first_name|default:user.email }}
                                     {{ user.last_name }}
                                 </span>
@@ -74,7 +82,8 @@
                                     {% csrf_token %}
                                     <button
                                         type="submit"
-                                        class="btn btn-link logout_button">
+                                        class="btn btn-link logout_button"
+                                        aria-label="Se déconnecter">
                                         <i class="fa-solid fa-power-off"></i> Se déconnecter
                                     </button>
                                 </form>

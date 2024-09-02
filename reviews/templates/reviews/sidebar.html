@@ -24,7 +24,7 @@
     <!-- Page Content -->
     <div id="page-content-wrapper" class="d-flex flex-column">
         <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-            <button class="btn btn-primary" id="menu-toggle">
+            <button class="btn btn-primary" id="menu-toggle" aria-label="Toggle Menu">
                 <i class="fas fa-bars primary-text fs-4 me-3"></i>
             </button>
 
@@ -76,7 +76,8 @@
                                     {% csrf_token %}
                                     <button
                                         type="submit"
-                                        class="btn btn-link logout_button">
+                                        class="btn btn-link logout_button"
+                                        aria-label="Se déconnecter">
                                         <i class="fa-solid fa-power-off"></i> Se déconnecter
                                     </button>
                                 </form>

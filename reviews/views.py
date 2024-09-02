@@ -302,16 +302,29 @@ def add_ticket_review(request):
     if request.method == 'POST':
         form = TicketandReviewForm(request.POST, request.FILES)
         if form.is_valid():
+            ticket, review = form.save(commit=False)
+            ticket.user = request.user
+            ticket.save()
+
+            review.user = request.user
+            review.ticket = ticket
+            review.save()
+            """
             ticket = form.cleaned_data['ticket'].save(commit=False)
-            ticke.user = request.user
+            ticket.user = request.user
             ticket.save()
 
             review = form.cleaned_data['review'].save(commit=False)
             review.user = request.user
             review.save()
-
+            """
+            messages.success(request, 'Le billet et la critique correspondante ont été créé avec succès')
             return redirect('feed')
     else:
         form = TicketandReviewForm()
 
-    return render(request, 'reviews/add_ticket_review.html', {'form': form})
+    return render(request, 'reviews/add_ticket_review.html', {
+        'form': form,
+        'ticket_form': form.ticket_form,
+        'review_form': form.review_form
+    })
