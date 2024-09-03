@@ -48,6 +48,39 @@ p {
     font-size: var(--copy-size);
 }
 
+/* media queries */
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .register_column, .login_column {
+        margin-bottom: 0.2rem;
+        height: auto;
+    }
+
+    .cta_register, .cta_login {
+        text-align: center;
+    }
+
+    .home_register_button {
+        width: auto;
+    }
+
+    .cta_welcome_title {
+        font-size: calc(var(--cta-subtitle-font-size) * 0.8);
+    }
+
+    .cta_welcome_message, .cta_register, .cta_login {
+        font-size: calc(var(--cta-message-font-size) * 0.8);
+    }
+
+    h3.cta_register, h3.cta_login {
+        font-size: calc(var(--cta-message-font-size) * 0.9)
+    }
+}
+
 /* navigations */
 .navigation {
     display: inline-flex;
@@ -206,6 +239,7 @@ body {
 .return_button, .custom-button-primary.btn-primary,
 .save-button.btn-primary,
 .cancel-button.btn-primary,
+.return_button,
 .add-ticket-button.btn-primary,
 .add-review-button.btn-primary,
 .follow-button.btn-primary {
@@ -254,7 +288,7 @@ body {
 }
 
 .custom-button-primary.btn-primary,
-.cancel-button.btn-primary {
+.cancel-button.btn-primary, .return_button {
     display: inline-block;
 }
 
@@ -266,6 +300,7 @@ body {
 .custom-button-primary.btn-primary:hover,
 .save-button.btn-primary:hover,
 .cancel-button.btn-danger:hover,
+.return_button:hover,
 .add-ticket-button.btn btn-primary:hover,
 .add-review-button.btn-primary:hover,
 .add-ticket-btn.btn-primary:hover,
@@ -283,7 +318,7 @@ body {
     margin-bottom: 1rem;
 }
 
-.custom-button-danger.btn-danger, .cancel-button.btn-danger {
+.custom-button-danger.btn-danger, .return_button, .cancel-button.btn-danger {
     background: var(--litreview-black);
     font-family: var(--copy-font-family);
     padding: calc(var(--base-font-size) * 0.618) calc(var(--base-font-size) * 1);
@@ -328,7 +363,7 @@ body {
 }
 
 /* register & login */
-.container, .register_container {
+.register_container {
     display: flex;
     justify-content: center;
     flex-direction: row;
@@ -338,8 +373,15 @@ body {
     margin: 0 auto;
     gap: calc(var(--base-font-size) * 1.618);
 }
-.register_column, .login_column, .register_section {
+
+.password_error {
+    font-weight: bold;
+    color: red;
+}
+
+.register_section {
     flex: 1;
+    gap: 1rem;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -351,7 +393,27 @@ body {
     margin: 0 calc(var(--base-font-size) * 0.618);
 }
 
-.login_form, .register_form {
+.register_column, .login_column {
+    flex: 1;
+    gap: 5px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    padding: calc(var(--base-font-size) * 1.618);
+    border: solid 1px var(--litreview-dark-gray);
+    border-radius: calc(var(--base-font-size) * 1.618);
+}
+
+.home_row {
+    display: flex;
+    gap: 2rem;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.login_form, .register_form, .subscribe_form {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -359,6 +421,10 @@ body {
     align-items: left;
     justify-content: center;
     padding: calc(var(--base-font-size) * 1.618);
+}
+
+.password_help {
+    text-align: left;
 }
 
 .join .login {
@@ -394,7 +460,7 @@ body {
     visibility: hidden;
 }
 
-.login_form input, .register_form input, .add_ticket_form input {
+.login_form input, .register_form input, .add_ticket_form input, .subscribe_form input {
     width: 100%;
     padding: calc(var(--base-font-size) * 0.618);
     border: 1px solid var(--litreview-dark-gray);
@@ -478,7 +544,7 @@ body {
 }
 
 .cta_register, .cta_login {
-    padding-bottom: 0.75rem;
+    padding-bottom: 0.2rem;
 }
 
 .welcome_container {

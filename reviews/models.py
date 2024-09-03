@@ -88,6 +88,11 @@ class Ticket(models.Model):
     image = models.ImageField(upload_to='tickets_media', blank=False)
     time_created = models.DateTimeField(auto_now_add=True)
 
+
+    def __str__(self):
+        return self.title
+
+
 class Review(models.Model):
     """
     Model that represents a review.
@@ -109,6 +114,9 @@ class Review(models.Model):
     body = models.CharField(max_length=8192, blank=True)
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     time_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Critique sur {self.ticket.title} par {self.user}'
 
 class UserFollows(models.Model):
     """

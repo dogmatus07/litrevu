@@ -1,18 +1,11 @@
 <!-- reviews/templates/reviews/register.html -->
 {% extends 'reviews/base.html' %}
 {% block content %}
-<div class="register_container">
+<div class="container">
     <div class="row">
-        <div class="col register_section">
+        <div class="col-12 register_section">
             <h2>Inscrivez-vous</h2>
             {% include 'reviews/register_form.html' %}
-            <button
-                    type="button"
-                    onclick="location.href='{% url 'home'%}'"
-                    class="return_button"
-                    aria-label="Retourner">
-                Retourner
-            </button>
         </div>
     </div>
 </div>
