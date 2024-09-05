@@ -125,6 +125,31 @@ Une fois le serveur lancé, vous pouvez utiliser ces identifiants pour tester l'
             <td>p9OpenC]24)</td>
             <td>Utilisateur</td>
         </tr>
+        <tr scope="row">
+            <td>marjorie_21@gmail.com</td>
+            <td>p9OpenC]24)</td>
+            <td>Utilisateur</td>
+        </tr>
+        <tr scope="row">
+            <td>etienneca@yahoo.fr</td>
+            <td>p9OpenC]24)</td>
+            <td>Utilisateur</td>
+        </tr>
+        <tr scope="row">
+            <td>veropenot@gmail.com</td>
+            <td>p9OpenC]24)</td>
+            <td>Utilisateur</td>
+        </tr>
+        <tr scope="row">
+            <td>stephweber@outlook.fr</td>
+            <td>p9OpenC]24)</td>
+            <td>Utilisateur</td>
+        </tr>
+        <tr scope="row">
+            <td>thierrysauron@gmail.com</td>
+            <td>p9OpenC]24)</td>
+            <td>Utilisateur</td>
+        </tr>
     </tbody>
 </table>
 
