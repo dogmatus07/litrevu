@@ -10,7 +10,7 @@
                     aria-describedby="logoDesc">
         </div>
         <div id="logoDesc" class="sr-only">
-        Ceci est le logo officiel de LitReview.
+            Ceci est le logo officiel de LitReview.
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item"><a href="{% url 'list_tickets' %}" aria-label="Billets de l'utilisateur">
@@ -21,8 +21,8 @@
                 Mes critiques</a></li>
             <li class="list-group-item">
                 <a href="{% url 'list_following' %}" aria-label="Utilisateurs suivis et abonnés">
-                <i class="fa-solid fa-users mr-1"></i>
-                Abonnements</a></li>
+                    <i class="fa-solid fa-users mr-1"></i>
+                    Abonnements</a></li>
             <li class="list-group-item"><a href="{% url 'feed' %}">
                 <i class="fa-solid fa-rss mr-1"></i>
                 Flux</a></li>
@@ -52,14 +52,14 @@
                                 href="#"
                                 id="navbarDropdown" role="button" data-toggle="dropdown">
                             {% if user.profile_picture %}
-                                <div class="profile-picture-container">
-                                    <img
+                            <div class="profile-picture-container">
+                                <img
                                         src="{{ user.profile_picture.url }}"
                                         alt="Profile Picture"
                                         class="profile-picture mr-2 rounded-circle">
-                                </div>
+                            </div>
                             {% else %}
-                                <img
+                            <img
                                     src="/media/profile_pictures/default-image.jpg"
                                     alt="default profile picture"
                                     class="no-profile-picture mr1">
@@ -77,13 +77,13 @@
                             <div class="dropdown-divider"></div>
                             <div class="dropdown-item">
                                 <form
-                                    action="{% url 'logout' %}"
-                                    method="post">
+                                        action="{% url 'logout' %}"
+                                        method="post">
                                     {% csrf_token %}
                                     <button
-                                        type="submit"
-                                        class="btn btn-link logout_button"
-                                        aria-label="Se déconnecter">
+                                            type="submit"
+                                            class="btn btn-link logout_button"
+                                            aria-label="Se déconnecter">
                                         <i class="fa-solid fa-power-off"></i> Se déconnecter
                                     </button>
                                 </form>

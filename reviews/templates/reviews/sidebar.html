@@ -46,14 +46,14 @@
                                 href="#"
                                 id="navbarDropdown" role="button" data-toggle="dropdown">
                             {% if user.profile_picture %}
-                                <div class="profile-picture-container">
-                                    <img
+                            <div class="profile-picture-container">
+                                <img
                                         src="{{ user.profile_picture.url }}"
                                         alt="Profile Picture"
                                         class="profile-picture mr-2 rounded-circle">
-                                </div>
+                            </div>
                             {% else %}
-                                <img
+                            <img
                                     src="/media/profile_pictures/default-image.jpg"
                                     alt="default profile picture"
                                     class="no-profile-picture mr1">
@@ -71,13 +71,13 @@
                             <div class="dropdown-divider"></div>
                             <div class="dropdown-item">
                                 <form
-                                    action="{% url 'logout' %}"
-                                    method="post">
+                                        action="{% url 'logout' %}"
+                                        method="post">
                                     {% csrf_token %}
                                     <button
-                                        type="submit"
-                                        class="btn btn-link logout_button"
-                                        aria-label="Se déconnecter">
+                                            type="submit"
+                                            class="btn btn-link logout_button"
+                                            aria-label="Se déconnecter">
                                         <i class="fa-solid fa-power-off"></i> Se déconnecter
                                     </button>
                                 </form>

@@ -199,7 +199,7 @@ def list_tickets(request):
     """
     View to list the tickets created by the logged-in user
     """
-    tickets = Ticket.objects.filter(user=request.user)
+    tickets = Ticket.objects.filter(user=request.user).order_by('-time_created')
     return render(request, 'reviews/list_tickets.html', {'tickets': tickets})
 
 @login_required
@@ -209,7 +209,7 @@ def list_reviews(request):
     :param request:
     :return: reviews/list_reviews.html
     """
-    reviews = Review.objects.filter(user=request.user)
+    reviews = Review.objects.filter(user=request.user).order_by('-time_created')
     return render(request, 'reviews/list_reviews.html', {'reviews': reviews})
 
 @login_required

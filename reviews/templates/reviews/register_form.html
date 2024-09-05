@@ -5,31 +5,36 @@
             <form method="post" action="" enctype="multipart/form-data" class="join subscribe_form">
                 {% csrf_token %}
                 <label for="id_email" class="d-none">Nom d'utilisateur</label>
-                <input type="email" name="email" autofocus required id="id_email" class="form_control my-2" placeholder="E-mail">
+                <input type="email" name="email" autofocus required id="id_email" class="form_control my-2"
+                       placeholder="E-mail">
                 <span class="text-left">{{ form.email.errors }}</span>
                 <label for="id_lastname" class="d-none">Nom d'utilisateur</label>
-                <input type="text" name="last_name" required id="id_last_name" class="form_control my-2" placeholder="Nom">
+                <input type="text" name="last_name" required id="id_last_name" class="form_control my-2"
+                       placeholder="Nom">
                 <span class="text-left">{{ form.last_name.errors }}</span>
                 <label for="id_first_name" class="d-none">Nom d'utilisateur</label>
-                <input type="text" name="first_name" required id="id_first_name" class="form_control my-2" placeholder="Prénom(s)">
+                <input type="text" name="first_name" required id="id_first_name" class="form_control my-2"
+                       placeholder="Prénom(s)">
                 <span class="text-left">{{ form.first_name.errors }}</span>
                 <label for="id_password1" class="d-none">Mot de passe</label>
-                <input type="password" name="password1" required id="id_password1" class="form_control my-2" placeholder="Mot de passe">
+                <input type="password" name="password1" required id="id_password1" class="form_control my-2"
+                       placeholder="Mot de passe">
                 <span class="text-left">{{ form.password1.errors }}</span>
                 <small class="password_help">{{ form.password1.help_text }}</small>
                 <label for="id_password2" class="d-none">Confirmez le mot de passe</label>
-                <input type="password" name="password2" required id="id_password2" class="form_control my-2" placeholder="Confirmez votre mot de passe">
+                <input type="password" name="password2" required id="id_password2" class="form_control my-2"
+                       placeholder="Confirmez votre mot de passe">
                 <span class="text-left password_error">{{ form.password2.errors }}</span>
                 <label for="profile_pic" class="text-left">Photo de profil :</label>
                 {{ form.profile_picture}}
                 <span class="text-left">{{ form.profile_picture.errors }}</span>
                 <button type="submit" class="signup_button" aria-label="S'inscrire">S'inscrire</button>
                 <button
-                    type="button"
-                    onclick="location.href='{% url 'home'%}'"
-                    class="return_button"
-                    aria-label="Retourner">
-                Retourner
+                        type="button"
+                        onclick="location.href='{% url 'home'%}'"
+                        class="return_button"
+                        aria-label="Retourner">
+                    Retourner
                 </button>
             </form>
         </div>
