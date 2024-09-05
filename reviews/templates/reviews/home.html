@@ -1,29 +1,23 @@
 <!-- reviews/templates/reviews/home.html -->
 {% extends 'reviews/base.html' %}
 {% block content %}
-<div class="welcome_container">
-    <div class="row">
-        <div class="col-md-12">
-            <h2 class="cta_welcome_title">Bienvenue sur LITReview</h2>
-            <p class="cta_welcome_message">Découvrez les critiques, partagez vos opinions et
-                connectez-vous avec d'autres passionnés de lecture.</p>
-        </div>
-    </div>
-</div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-5 register_column">
+
+<div class="container my-4">
+    <div class="row home_row">
+        <div class="col-md-5 col-12 register_column my-2 px-2">
             <h3 class="cta_register">Pas encore inscrit(e) ? Inscrivez-vous maintenant</h3>
-            <button type="button" class="home_register_button" onclick="location.href='{% url 'register'%}'">S'inscrire</button>
+            <button
+                    type="button"
+                    class="home_register_button"
+                    onclick="location.href='{% url 'register'%}'"
+                    aria-label="S'inscrire">
+                S'inscrire
+            </button>
         </div>
-        <div class="col-md-6 login_column">
+        <div class="col-md-5 col-12 login_column my-2 px-2">
             <h3 class="cta_login">Connectez-vous</h3>
             {% include 'reviews/login_form.html' with form=login_form %}
         </div>
     </div>
 </div>
-<div>
-
-</div>
-
 {% endblock %}

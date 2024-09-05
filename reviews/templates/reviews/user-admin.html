@@ -1,0 +1,104 @@
+{% load static %}
+<div id="wrapper" class="d-flex">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <div class="sidebar-heading">
+            <img
+                    src="{% static 'reviews/images/logo.png'%}"
+                    alt="Logo officiel LITReview"
+                    class="logo"
+                    aria-describedby="logoDesc">
+        </div>
+        <div id="logoDesc" class="sr-only">
+        Ceci est le logo officiel de LitReview.
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="{% url 'list_tickets' %}" aria-label="Billets de l'utilisateur">
+                <i class="fa-solid fa-ticket mr-1"></i>
+                Mes billets</a></li>
+            <li class="list-group-item"><a href="{% url 'list_reviews' %}" aria-label="Critiques de l'utilisateur">
+                <i class="fa-sharp fa-solid fa-star mr-1"></i>
+                Mes critiques</a></li>
+            <li class="list-group-item">
+                <a href="{% url 'list_following' %}" aria-label="Utilisateurs suivis et abonnés">
+                <i class="fa-solid fa-users mr-1"></i>
+                Abonnements</a></li>
+            <li class="list-group-item"><a href="{% url 'feed' %}">
+                <i class="fa-solid fa-rss mr-1"></i>
+                Flux</a></li>
+        </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom sticky-top">
+            <button class="btn mt-1" id="menu-toggle" aria-label="Toggle Menu"><i class="fa-solid fa-bars"></i></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0 d-flex align-items-center">
+                    <li class="nav-item active">
+                        <a class="btn btn-primary mx-2 add-ticket-btn" href="{% url 'add_ticket' %}">
+                            <i class="fa-solid fa-newspaper"></i>
+                            Demander une critique <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-success mx-2 add-review-btn" href="{% url 'add_ticket_review' %}">
+                            <i class="fa-solid fa-star"></i>
+                            Créer une critique</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a
+                                class="nav-link dropdown-toggle d-flex align-items-center"
+                                href="#"
+                                id="navbarDropdown" role="button" data-toggle="dropdown">
+                            {% if user.profile_picture %}
+                                <div class="profile-picture-container">
+                                    <img
+                                        src="{{ user.profile_picture.url }}"
+                                        alt="Profile Picture"
+                                        class="profile-picture mr-2 rounded-circle">
+                                </div>
+                            {% else %}
+                                <img
+                                    src="/media/profile_pictures/default-image.jpg"
+                                    alt="default profile picture"
+                                    class="no-profile-picture mr1">
+                            {% endif %}
+                            <div class="profile-greetings">
+                                <span style="color: #6f7070;">
+                                    {{ user.first_name|default:user.email }}
+                                    {{ user.last_name }}
+                                </span>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Mon compte</a>
+                            <a class="dropdown-item" href="#">Aide</a>
+                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-item">
+                                <form
+                                    action="{% url 'logout' %}"
+                                    method="post">
+                                    {% csrf_token %}
+                                    <button
+                                        type="submit"
+                                        class="btn btn-link logout_button"
+                                        aria-label="Se déconnecter">
+                                        <i class="fa-solid fa-power-off"></i> Se déconnecter
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="content-container container-fluid">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+</div>
+<!-- /#wrapper -->

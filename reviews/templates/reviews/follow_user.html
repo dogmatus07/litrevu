@@ -1,0 +1,10 @@
+<!-- reviews/templates/reviews/follow_user.html -->
+{% extends 'reviews/base.html' %}
+{% block content %}
+    <h2>Suivre un utilisateur</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary" aria-label="Suivre">Suivre</button>
+    </form>
+{% endblock %}

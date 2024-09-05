@@ -1,14 +1,27 @@
 <!-- reviews/templates/reviews/add_ticket.html -->
 {% extends 'reviews/base.html' %}
 {% block content %}
-<div class="ticket container">
-    <div class="row">
-        <h2>Ajouter un billet</h2>
-        <form method="post" action="{% url 'add_ticket' %}" enctype="multipart/form-data" class="add_ticket_form">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="signup_button">Ajouter</button>
-        </form>
+<div class="container">
+    <div class="row d-flex flex-column justify-content-center align-items-center my-4">
+        <div class="col-md-8">
+            <h2 class="text-center mb-3">Ajouter un billet</h2>
+            <form method="post" action="{% url 'add_ticket' %}" enctype="multipart/form-data" class="add_ticket_form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_title" class="d-none">Titre</label>
+                    <input type="text" name="title" autofocus required id="id_title" class="form-control my-2" placeholder="Titre">
+                </div>
+                <div class="form-group">
+                    <label for="id_description" class="d-none">Description</label>
+                    <textarea name="description" required id="id_description" class="form-control my-2" placeholder="Description" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="id_image">Image :</label>
+                    {{ form.image }}
+                </div>
+                <button type="submit" class="signup_button" aria-label="Ajouter">Ajouter</button>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}

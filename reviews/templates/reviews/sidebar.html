@@ -1,0 +1,101 @@
+{% load static %}
+<div class="d-flex" id="wrapper">
+    <!-- Sidebar -->
+    <div class="bg-dark border-right" id="sidebar-wrapper">
+        <div class="sidebar-heading text-center">
+            <img src="{% static 'reviews/images/logo-light.png' %}" class="logo">
+        </div>
+        <div class="list-group list-group-flush">
+            <a href="{% url 'list_tickets' %}" class="list-group-item list-group-item-action bg-dark text-white">
+                <li class="fa-solid fa-ticket mr-1"></li>
+                Mes billets</a>
+            <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+                <li class="fa-sharp fa-solid fa-star mr-1"></li>
+                Mes critiques</a>
+            <a href="#" class="list-group-item list-group-item-action bg-dark text-white">
+                <li class="fa-solid fa-users mr-1"></li>
+                Abonnements</a>
+            <a href="{% url 'feed' %}" class="list-group-item list-group-item-action bg-dark text-white">
+                <li class="fa-solid fa-rss mr-1"></li>
+                Flux</a>
+        </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+    <!-- Page Content -->
+    <div id="page-content-wrapper" class="d-flex flex-column">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <button class="btn btn-primary" id="menu-toggle" aria-label="Toggle Menu">
+                <i class="fas fa-bars primary-text fs-4 me-3"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0 d-flex align-items-center">
+                    <li class="nav-item active">
+                        <a class="btn btn-primary mx-2 add-ticket-btn" href="{% url 'add_ticket' %}">
+                            <i class="fa-solid fa-newspaper"></i>
+                            Demander une critique <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-success mx-2 add-review-btn" href="#">
+                            <i class="fa-solid fa-star"></i>
+                            Créer une critique</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a
+                                class="nav-link dropdown-toggle d-flex align-items-center"
+                                href="#"
+                                id="navbarDropdown" role="button" data-toggle="dropdown">
+                            {% if user.profile_picture %}
+                                <div class="profile-picture-container">
+                                    <img
+                                        src="{{ user.profile_picture.url }}"
+                                        alt="Profile Picture"
+                                        class="profile-picture mr-2 rounded-circle">
+                                </div>
+                            {% else %}
+                                <img
+                                    src="/media/profile_pictures/default-image.jpg"
+                                    alt="default profile picture"
+                                    class="no-profile-picture mr1">
+                            {% endif %}
+                            <div class="profile-greetings">
+                                <span>
+                                    {{ user.first_name|default:user.email }}
+                                    {{ user.last_name }}
+                                </span>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Mon compte</a>
+                            <a class="dropdown-item" href="#">Aide</a>
+                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-item">
+                                <form
+                                    action="{% url 'logout' %}"
+                                    method="post">
+                                    {% csrf_token %}
+                                    <button
+                                        type="submit"
+                                        class="btn btn-link logout_button"
+                                        aria-label="Se déconnecter">
+                                        <i class="fa-solid fa-power-off"></i> Se déconnecter
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                    <h4 class="mt-4">Bonjour {{ user.first_name }},</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% block content %} {% endblock %}
+    <!-- /#page-content-wrapper -->
+</div>
+<!-- /#wrapper -->

@@ -1,19 +1,78 @@
 <!-- reviews/templates/reviews/list_tickets.html -->
 {% extends 'reviews/base.html' %}
+{% load range_filter %}
 {% block content %}
+
 <div class="container">
     <div class="row">
-        <h2>Mes billets</h2>
-        <ul>
-            {% for ticket in tickets %}
-            <li>
-                <h3>{{ ticket.title }}</h3>
-                <p>{{ ticket.description }}</p>
-                <a href="{% url 'edit_ticket' ticket.id %}">Modifier</a>
-            </li>
-            {% endfor %}
-        </ul>
+        <div class="col mb-2 offset-md-2">
+            <h2 class="my-3">Vos tickets</h2>
+        </div>
+    </div>
+    <div class="row">
+        {% for ticket in tickets %}
+        <div class="col-md-8 offset-md-2">
+            <div class="card mb-3 p-3 bg-white">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img
+                            src="{{ ticket.image.url }}"
+                            alt="{{ ticket.title }}"
+                            class="card-img">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ ticket.title }}</h5>
+                            <p class="card-text">{{ ticket.description }}</p>
+                            <p class="card-text"><small class="text-muted">Créé le : {{ ticket.time_created }}</small></p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{% url 'edit_ticket' ticket.id %}" class="btn btn-primary custom-button-primary">
+                                <i class="fa fa-pencil-alt"></i> Modifier
+                            </a>
+                            <form method="post" action="{% url 'delete_ticket' ticket.id %}" style="display: inline">
+                                {% csrf_token %}
+                                <button
+                                    type="submit"
+                                    class="btn btn-danger custom-button-danger"
+                                    onclick="return confirm('Etes-vous sûr de vouloir supprimer cet élément ?');"
+                                    aria-label="Supprimer">
+                                    <i class="fa fa-trash"></i> Supprimer
+                                </button>
+                            </form>
+                            {% if ticket.id not in reviewed_tickets_ids %}
+                                <a
+                                        href="{% url 'add_review' ticket.id %}"
+                                        class="review-button btn btn-primary">
+                                    Créer une critique</a>
+                            {% else %}
+                                {% for review in ticket.reviews.all %}
+                                    <div class="single-review my-4 p-2 border border-dark bg-light shadow">
+                                        <strong>{{ review.user.first_name }} : </strong>
+                                        <div class="star-rating">
+                                            {% for i in 1|range:6 %}
+                                                {% if i <= review.rating %}
+                                                    <i class="fas fa-star"></i>
+                                                {% else %}
+                                                    <i class="far fa-star"></i>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                        <h5>{{ review.headline }}</h5>
+                                        <p>{{ review.body }}</p>
+                                        <small>
+                                            Créé par {{ review.user.first_name }}
+                                            {{ review.user.last_initial|capfirst }}.
+                                        </small>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
-
 {% endblock %}

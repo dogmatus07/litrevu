@@ -17,16 +17,38 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from reviews import views
-from reviews.views import RegisterView, LoginView, home, add_ticket, edit_ticket, list_tickets, dashboard
+from reviews.views import RegisterView, \
+    LoginView, \
+    home, \
+    add_ticket, \
+    edit_ticket, \
+    list_tickets, \
+    dashboard, \
+    feed, delete_ticket,\
+    add_review, \
+    add_ticket_review, \
+    list_following, unfollow_user, list_reviews
+from django.contrib.auth.views import LogoutView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', home, name='home'),
     path('home/', home, name='home'),
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', LoginView.as_view(), name='login'),
     path('add_ticket/', add_ticket, name='add_ticket'),
     path('edit_ticket/<int:ticket_id>/', edit_ticket, name='edit_ticket'),
+    path('delete_ticket/<int:ticket_id>/', delete_ticket, name='delete_ticket'),
+    path('add_review/<int:ticket_id>/', add_review, name='add_review'),
+    path('add_ticket_review', add_ticket_review, name='add_ticket_review'),
     path('tickets/', list_tickets, name='list_tickets'),
-    path('dashboard/', dashboard, name='dashboard')
+    path('reviews/', list_reviews, name='list_reviews'),
+    path('dashboard/', dashboard, name='dashboard'),
+    path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
+    path('feed/', feed, name='feed'),
+    path('following/', list_following, name='list_following' ),
+    path('unfollow/<int:user_id>/', unfollow_user, name='unfollow_user')
 
-]
+] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
