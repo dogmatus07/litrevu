@@ -1,52 +1,40 @@
 <!-- reviews/templates/reviews/add_ticket_review.html -->
 {% extends 'reviews/base.html' %}
 {% block content %}
-<div class="ticket container mt-1 ml-5">
-    <div class="row d-inline mb-3">
-        <h2>Ajouter un billet et sa critique</h2>
+<div class="container">
+    <div class="row d-flex flex-column justify-content-center align-items-center my-4">
+        <h3>Ajouter un billet</h3>
         <form method="post" enctype="multipart/form-data" class="form-horizontal">
             {% csrf_token %}
-            <!--{{ ticket_form.as_p }}-->
-            <!--{{ review_form.as_p }}-->
+
             <!-- Ticket Creation -->
             <div class="form-group">
-                <label for="title">Titre du billet</label>
+                <label for="{{ ticket_form.title.id_for_label }}" class="d-none">Titre</label>
                 {{ ticket_form.title }}
             </div>
             <div class="form-group">
-                <label for="description">Description</label>
+                <label for="{{ ticket_form.description.id_for_label }}" class="d-none">Description</label>
                 {{ ticket_form.description }}
             </div>
             <div class="form-group">
-                <label for="image">Image :</label>
-                {{ ticket_form.image }}
+                <label for="{{ ticket_form.image.id_for_label }}">Image :</label>
+                <div class="image border rounded p-2">{{ ticket_form.image }}</div>
             </div>
+
             <!-- Review creation -->
+            <h3 class="my-2">Ajouter une critique sur ce billet</h3>
             <div class="form-group">
-                <label for="rating">Note :</label>
+                <label for="{{ review_form.rating.id_for_label }}">Note</label>
                 {{ review_form.rating }}
-                <!--
-                <select name="rating" class="form-control" required>
-                    <option value="" disabled selected>Choisissez une note</option>
-                    <option value="1">1 - Très mauvais</option>
-                    <option value="2">2 - Mauvais</option>
-                    <option value="3">3 - Moyen</option>
-                    <option value="4">4 - Bon</option>
-                    <option value="5">5 - Excellent</option>
-                </select>-->
             </div>
+
             <div class="form-group">
-                <label for="headline">Titre de la critique :</label>
+                <label for="{{ review_form.headline.id_for_label }}" class="d-none">Titre de la critique :</label>
                 {{ review_form.headline }}
-                <!--
-                <input
-                        type="text"
-                        name="headline"
-                        class="form-control"
-                        placeholder="Entrez le titre de votre critique" required>-->
             </div>
+
             <div class="form-group">
-                <label for="body">Votre critique</label>
+                <label for="{{ review_form.body.id_for_label }}" class="d-none">Votre critique</label>
                 {{ review_form.body }}
             </div>
 

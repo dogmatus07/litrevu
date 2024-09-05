@@ -3,18 +3,18 @@
 {% load range_filter %}
 {% block content %}
 
-<div class="container d-flex flex-column">
+<div class="container">
     <div class="row">
-        <div class="col mb-3">
-            <h2 class="mb-3">Vos tickets</h2>
+        <div class="col mb-2 offset-md-2">
+            <h2 class="my-3">Vos tickets</h2>
         </div>
     </div>
-    <div class="row d-flex flex-column">
+    <div class="row">
         {% for ticket in tickets %}
-        <div class="col-12 mb-2">
-            <div class="card bg-white mb-3 p-3">
-                <div class="row no-gutters">
-                    <div class="col-md-4 justify-content-center">
+        <div class="col-md-8 offset-md-2">
+            <div class="card mb-3 p-3 bg-white">
+                <div class="row g-0">
+                    <div class="col-md-4">
                         <img
                             src="{{ ticket.image.url }}"
                             alt="{{ ticket.title }}"
@@ -58,7 +58,7 @@
                                                 {% endif %}
                                             {% endfor %}
                                         </div>
-                                        <h4>{{ review.headline }}</h4>
+                                        <h5>{{ review.headline }}</h5>
                                         <p>{{ review.body }}</p>
                                         <small>
                                             Créé par {{ review.user.first_name }}

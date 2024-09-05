@@ -99,6 +99,11 @@ p {
 
 
 /* User tickets section */
+
+.card-section {
+    flex-basis: 80%;
+    margin-left: 15rem;
+}
 .card-img {
     width: 100%;
     height: auto;
@@ -117,9 +122,13 @@ p {
     background: transparent !important;
 }
 
+.form-file {
+    font-size: 14px;
+}
+
 .card {
     display: flex;
-    background: var(--litreview-light-gray) !important;
+    background: var(--litreview-light-gray);
     flex-direction: row;
     align-items: center;
     overflow: hidden;
@@ -237,6 +246,8 @@ body {
 .signup_button,
 .login_button, .home_register_button,
 .return_button, .custom-button-primary.btn-primary,
+.accordion-button.btn-primary,
+.accordion-toggle-button.btn-primary,
 .save-button.btn-primary,
 .cancel-button.btn-primary,
 .return_button,
@@ -298,6 +309,8 @@ body {
 .return_button:hover,
 .custom-button-danger.btn-danger:hover,
 .custom-button-primary.btn-primary:hover,
+.accordion-button.btn-primary:hover,
+.accordion-toggle-button.btn-primary:hover,
 .save-button.btn-primary:hover,
 .cancel-button.btn-danger:hover,
 .return_button:hover,
