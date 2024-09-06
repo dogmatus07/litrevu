@@ -3,10 +3,12 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+
 class CustomUserManager(BaseUserManager):
     """
     Custom user manage. To create normal users and superusers
     """
+
     def create_user(self, email, password=None, **extra_fields):
         """
         Creates and saves a normal user with his email and password
@@ -42,6 +44,7 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault('is_superuser', True)
         return self.create_user(email, password, **extra_fields)
 
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     """
     Custom user model that extends the AbstractBaseUser and PermissionsMixin
@@ -68,7 +71,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         """
         return self.email
 
-
     @property
     def last_initial(self):
         """
@@ -76,6 +78,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         :return: First letter of the last name of a user to preserve privacy
         """
         return self.last_name[0] if self.last_name else ''
+
 
 class Ticket(models.Model):
     """
@@ -85,9 +88,9 @@ class Ticket(models.Model):
     title = models.CharField(max_length=128)
     description = models.TextField(max_length=2048, blank=True)
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='tickets_media', blank=False)
+    image = models.ImageField(upload_to='tickets_media', null=False, blank=False,
+                              default='media/tickets_media/book_default.jpg')
     time_created = models.DateTimeField(auto_now_add=True)
-
 
     def __str__(self):
         return self.title
@@ -108,7 +111,7 @@ class Review(models.Model):
     ]
     ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE, related_name='reviews')
     rating = models.PositiveSmallIntegerField(
-        validators=[MinValueValidator(0), MaxValueValidator(5)],\
+        validators=[MinValueValidator(0), MaxValueValidator(5)], \
         choices=ratings)
     headline = models.CharField(max_length=128)
     body = models.CharField(max_length=8192, blank=True)
@@ -117,6 +120,7 @@ class Review(models.Model):
 
     def __str__(self):
         return f'Critique sur {self.ticket.title} par {self.user}'
+
 
 class UserFollows(models.Model):
     """
