@@ -29,6 +29,32 @@ pip install -r requirements.txt
 
 ## Configuration initiale
 
+### Créer l'environnement virtuel
+#### Sous Linux
+
+```
+python3 -m venv env
+```
+
+#### Sous Windows
+
+```
+python -m venv venv
+```
+
+### Activer l'environnement virtuel
+#### Sous Linux
+
+```
+source env/bin/activate
+```
+
+#### Sous Windows
+
+```
+venv\Scripts\activate
+```
+
 ### Cloner le dépôt Git
 Vous devez cloner le dépôt Git avec la commande suivante :
 
@@ -38,22 +64,22 @@ git clone https://github.com/dogmatus07/litrevu.git
 
 ### Installation des dépendances
 
-Afin d'installer les dépendances, vous devez d'abord activer votre environnement virtuel.
-
-#### Sous Windows
+Installez les dépendances requises avec la commande suivante :
 
 ```
-python -m venv venv  
-venv\Scripts\activate  
+cd litrevu
 pip install -r requirements.txt
 ```
 
-#### Sous Mac & Linux
+## Configuration de la base de données
+
+Un fichier `db.sqlite3` est déjà inclus dans le projet avec des données de démonstration.  
+
+Si vous souhaite réinitialiser la base de données, exécutez la commande suivante : 
 
 ```
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
+python3 manage.py makemigrations
+python3 manage.py migrate
 ```
 
 ## Lancement de l'application
@@ -61,18 +87,9 @@ pip install -r requirements.txt
 Pour lancer l'application, accédez au dossier du projet contenant le fichier manage.py et exécutez la commande suivante : 
 
 ```
-py manage.py runserver
+python3 manage.py runserver
 ```
 
-### Configuration de la base de données
-
-Un fichier `db.sqlite3` est déjà inclus dans le projet avec des données de démonstration.  
-
-Si vous souhaite réinitialiser la base de données, exécutez la commande suivante : 
-
-```
-py manage.py migrate
-```
 
 ### Informations de connexion
 
